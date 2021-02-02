@@ -7,21 +7,31 @@ import com.example.erdiagram.Permission;
 import com.example.erdiagram.User;
 import java.util.List;
 import java.util.time.LocalDate;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 public class User {
 
+    @NonNull
     private Long id;
+    @NonNull
     private String username;
+    @NonNull
     private String name;
     @Nullable
     private LocalDate birthday;
+    @NonNull
     private Boolean active;
+    @NonNull
     private Country country;
     @Nullable
     private Country alternativeCountry;
+    @NonNull
     private List<Permission> permissions;
-    private List<User> follows;
-    private List<User> followers;
+    @NonNull
+    private List<User> follow;
+    @NonNull
+    private List<User> follower;
 
     public Long getId() {
         return id;
@@ -87,20 +97,20 @@ public class User {
         this.permissions = permissions;
     }
 
-    public List<User> getFollows() {
-        return follows;
+    public List<User> getFollow() {
+        return follow;
     }
 
-    public List<User> setFollows(List<User> follows) {
-        this.follows = follows;
+    public List<User> setFollow(List<User> follow) {
+        this.follow = follow;
     }
 
-    public List<User> getFollowers() {
-        return followers;
+    public List<User> getFollower() {
+        return follower;
     }
 
-    public List<User> setFollowers(List<User> followers) {
-        this.followers = followers;
+    public List<User> setFollower(List<User> follower) {
+        this.follower = follower;
     }
 
 }
@@ -109,10 +119,15 @@ public class User {
 
 package com.example.erdiagram;
 
+import org.springframework.lang.NonNull;
+
 public class Country {
 
+    @NonNull
     private Long id;
+    @NonNull
     private String code;
+    @NonNull
     private String name;
 
     public Long getId() {
@@ -147,12 +162,17 @@ package com.example.erdiagram;
 
 import com.example.erdiagram.User;
 import java.util.List;
+import org.springframework.lang.NonNull;
 
 public class Permission {
 
+    @NonNull
     private Long id;
+    @NonNull
     private String code;
+    @NonNull
     private String description;
+    @NonNull
     private List<User> users;
 
     public Long getId() {
@@ -194,10 +214,13 @@ public class Permission {
 package com.example.erdiagram;
 
 import com.example.erdiagram.TreeNode;
+import org.springframework.lang.NonNull;
 
 public class Tree {
 
+    @NonNull
     private Long id;
+    @NonNull
     private TreeNode headNode;
 
     public Long getId() {
@@ -224,14 +247,19 @@ package com.example.erdiagram;
 
 import com.example.erdiagram.TreeNode;
 import java.util.List;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 public class TreeNode {
 
+    @NonNull
     private Long id;
+    @NonNull
     private Integer value;
     @Nullable
     private TreeNode parent;
-    private List<TreeNode> children;
+    @NonNull
+    private List<TreeNode> child;
 
     public Long getId() {
         return id;
@@ -257,12 +285,12 @@ public class TreeNode {
         this.parent = parent;
     }
 
-    public List<TreeNode> getChildren() {
-        return children;
+    public List<TreeNode> getChild() {
+        return child;
     }
 
-    public List<TreeNode> setChildren(List<TreeNode> children) {
-        this.children = children;
+    public List<TreeNode> setChild(List<TreeNode> child) {
+        this.child = child;
     }
 
 }

@@ -46,6 +46,7 @@ const modelCodeGenerator = ((): EntityRelationshipModelToCodeConverter => {
 			return new EntityRelationshipModelToClassCodeConverter(
 					new JavaClassModelToCodeConverter({
 						generatedClassesPackage: 'com.example.erdiagram',
+						useSpringNullabilityAnnotations: true,
 						typesMap: {
 							// [EntityPropertyType.INT]: createJavaType('int')
 						}
