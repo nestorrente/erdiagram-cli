@@ -38,8 +38,8 @@ CREATE TABLE `TreeNode` (
 
 CREATE TABLE `UserPermission` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
-    `usersId` BIGINT NOT NULL,
-    `permissionsId` BIGINT NOT NULL,
+    `userId` BIGINT NOT NULL,
+    `permissionId` BIGINT NOT NULL,
     CONSTRAINT `UserPermission_pk` PRIMARY KEY (`id`)
 );
 
@@ -57,8 +57,8 @@ ALTER TABLE `Tree` ADD CONSTRAINT `Tree_headNodeId_fk` FOREIGN KEY (`headNodeId`
 
 ALTER TABLE `TreeNode` ADD CONSTRAINT `TreeNode_parentId_fk` FOREIGN KEY (`parentId`) REFERENCES `TreeNode` (`id`);
 
-ALTER TABLE `UserPermission` ADD CONSTRAINT `UserPermission_usersId_fk` FOREIGN KEY (`usersId`) REFERENCES `User` (`id`);
-ALTER TABLE `UserPermission` ADD CONSTRAINT `UserPermission_permissionsId_fk` FOREIGN KEY (`permissionsId`) REFERENCES `Permission` (`id`);
+ALTER TABLE `UserPermission` ADD CONSTRAINT `UserPermission_userId_fk` FOREIGN KEY (`userId`) REFERENCES `User` (`id`);
+ALTER TABLE `UserPermission` ADD CONSTRAINT `UserPermission_permissionId_fk` FOREIGN KEY (`permissionId`) REFERENCES `Permission` (`id`);
 
 ALTER TABLE `Follows` ADD CONSTRAINT `Follows_followerId_fk` FOREIGN KEY (`followerId`) REFERENCES `User` (`id`);
 ALTER TABLE `Follows` ADD CONSTRAINT `Follows_followId_fk` FOREIGN KEY (`followId`) REFERENCES `User` (`id`);

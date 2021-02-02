@@ -29,9 +29,9 @@ public class User {
     @NonNull
     private List<Permission> permissions;
     @NonNull
-    private List<User> follow;
+    private List<User> follows;
     @NonNull
-    private List<User> follower;
+    private List<User> followers;
 
     public Long getId() {
         return id;
@@ -97,20 +97,20 @@ public class User {
         this.permissions = permissions;
     }
 
-    public List<User> getFollow() {
-        return follow;
+    public List<User> getFollows() {
+        return follows;
     }
 
-    public List<User> setFollow(List<User> follow) {
-        this.follow = follow;
+    public List<User> setFollows(List<User> follows) {
+        this.follows = follows;
     }
 
-    public List<User> getFollower() {
-        return follower;
+    public List<User> getFollowers() {
+        return followers;
     }
 
-    public List<User> setFollower(List<User> follower) {
-        this.follower = follower;
+    public List<User> setFollowers(List<User> followers) {
+        this.followers = followers;
     }
 
 }
@@ -259,7 +259,7 @@ public class TreeNode {
     @Nullable
     private TreeNode parent;
     @NonNull
-    private List<TreeNode> child;
+    private List<TreeNode> children;
 
     public Long getId() {
         return id;
@@ -285,12 +285,12 @@ public class TreeNode {
         this.parent = parent;
     }
 
-    public List<TreeNode> getChild() {
-        return child;
+    public List<TreeNode> getChildren() {
+        return children;
     }
 
-    public List<TreeNode> setChild(List<TreeNode> child) {
-        this.child = child;
+    public List<TreeNode> setChildren(List<TreeNode> children) {
+        this.children = children;
     }
 
 }

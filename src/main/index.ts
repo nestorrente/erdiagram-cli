@@ -5,8 +5,9 @@ import {
 	EntityRelationshipModelToClassCodeConverter,
 	EntityRelationshipModelToCodeConverter,
 	EntityRelationshipModelToDatabaseCodeConverter,
+	MySqlDatabaseModelToCodeConverter,
 	JavaClassModelToCodeConverter,
-	MySqlDatabaseModelToCodeConverter
+	TypeScriptClassModelToCodeConverter
 } from '@nestorrente/erdiagram';
 
 const args = yargs
@@ -36,21 +37,18 @@ const modelCodeGenerator = ((): EntityRelationshipModelToCodeConverter => {
 	switch (config.format) {
 		case 'mysql':
 			return new EntityRelationshipModelToDatabaseCodeConverter(
-					new MySqlDatabaseModelToCodeConverter({
-						// idNamingStrategy: StandardIdNamingStrategies.ENTITY_NAME_PREFIX,
-						// tableNameCaseFormat: StandardCaseFormats.UPPER_UNDERSCORE,
-						// columnNameCaseFormat: StandardCaseFormats.LOWER_UNDERSCORE,
-					})
+					new MySqlDatabaseModelToCodeConverter()
 			);
 		case 'java':
 			return new EntityRelationshipModelToClassCodeConverter(
 					new JavaClassModelToCodeConverter({
 						generatedClassesPackage: 'com.example.erdiagram',
-						useSpringNullabilityAnnotations: true,
-						typesMap: {
-							// [EntityPropertyType.INT]: createJavaType('int')
-						}
+						useSpringNullabilityAnnotations: true
 					})
+			);
+		case 'typescript':
+			return new EntityRelationshipModelToClassCodeConverter(
+					new TypeScriptClassModelToCodeConverter()
 			);
 		default:
 			throw new Error(`Unknown format: ${config.format}`);
