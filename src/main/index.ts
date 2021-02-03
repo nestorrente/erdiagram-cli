@@ -1,12 +1,14 @@
 import yargs from 'yargs';
 import fs from 'fs';
 import {
-	entityRelationshipModelParser,
+	ClassModelGenerator,
+	DatabaseModelGenerator,
+	EntityRelationshipModelParser,
 	EntityRelationshipModelToClassCodeConverter,
 	EntityRelationshipModelToCodeConverter,
 	EntityRelationshipModelToDatabaseCodeConverter,
-	MySqlDatabaseModelToCodeConverter,
 	JavaClassModelToCodeConverter,
+	MySqlDatabaseModelToCodeConverter,
 	TypeScriptClassModelToCodeConverter
 } from '@nestorrente/erdiagram';
 
@@ -37,10 +39,12 @@ const modelCodeGenerator = ((): EntityRelationshipModelToCodeConverter => {
 	switch (config.format) {
 		case 'mysql':
 			return new EntityRelationshipModelToDatabaseCodeConverter(
+					new DatabaseModelGenerator(),
 					new MySqlDatabaseModelToCodeConverter()
 			);
 		case 'java':
 			return new EntityRelationshipModelToClassCodeConverter(
+					new ClassModelGenerator(),
 					new JavaClassModelToCodeConverter({
 						generatedClassesPackage: 'com.example.erdiagram',
 						useSpringNullabilityAnnotations: true
@@ -48,6 +52,7 @@ const modelCodeGenerator = ((): EntityRelationshipModelToCodeConverter => {
 			);
 		case 'typescript':
 			return new EntityRelationshipModelToClassCodeConverter(
+					new ClassModelGenerator(),
 					new TypeScriptClassModelToCodeConverter()
 			);
 		default:
@@ -71,7 +76,9 @@ const outputCallback = ((): OutputCallback => {
 
 const inputCode = fs.readFileSync(config.inputFile).toString();
 
-const model = entityRelationshipModelParser.parseModel(inputCode);
+const model = new EntityRelationshipModelParser({
+	allowUnknownEntities: true
+}).parseModel(inputCode);
 const outputCode = modelCodeGenerator.generateCode(model);
 
 outputCallback(outputCode);
