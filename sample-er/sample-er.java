@@ -2,9 +2,6 @@
 
 package com.example.erdiagram;
 
-import com.example.erdiagram.Country;
-import com.example.erdiagram.Permission;
-import com.example.erdiagram.User;
 import java.util.List;
 import java.util.time.LocalDate;
 import org.springframework.lang.NonNull;
@@ -160,7 +157,6 @@ public class Country {
 
 package com.example.erdiagram;
 
-import com.example.erdiagram.User;
 import java.util.List;
 import org.springframework.lang.NonNull;
 
@@ -213,7 +209,6 @@ public class Permission {
 
 package com.example.erdiagram;
 
-import com.example.erdiagram.TreeNode;
 import org.springframework.lang.NonNull;
 
 public class Tree {
@@ -245,7 +240,6 @@ public class Tree {
 
 package com.example.erdiagram;
 
-import com.example.erdiagram.TreeNode;
 import java.util.List;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
