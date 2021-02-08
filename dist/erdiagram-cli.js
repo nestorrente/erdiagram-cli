@@ -4,7 +4,7 @@
  * 
  * Released under the MIT License.
  * 
- * Build date: 2021-02-08T17:57:18.938Z
+ * Build date: 2021-02-08T18:02:37.659Z
  */!function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s=22)}([function(e,t){e.exports=require("path")},function(e,t,r){
 /*!
  * Entity-Relationship Diagram Code Generator v0.1.0
@@ -12,7 +12,7 @@
  * 
  * Released under the MIT License.
  * 
- * Build date: 2021-02-08T17:55:49.911Z
+ * Build date: 2021-02-08T18:02:05.619Z
  */
 var n;"undefined"!=typeof self&&self,n=function(){return function(e){var t={};function r(n){if(t[n])return t[n].exports;var o=t[n]={i:n,l:!1,exports:{}};return e[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}return r.m=e,r.c=t,r.d=function(e,t,n){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(r.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)r.d(n,o,function(t){return e[t]}.bind(null,o));return n},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s="./src/main/module-entry.ts")}({"./node_modules/pluralize/pluralize.js":
 /*!*********************************************!*\
@@ -22,11 +22,19 @@ var n;"undefined"!=typeof self&&self,n=function(){return function(e){var t={};fu
 /*!****************************************************************************!*\
   !*** ./src/main/erdiagram/common/config/AbstractComponentConfigManager.ts ***!
   \****************************************************************************/
-/*! exports provided: default */function(e,t,r){"use strict";r.r(t);var n=function(){function e(){}return e.prototype.mergeWithDefaultConfig=function(e){return this.mergeConfigs(this.getDefaultConfig(),e)},e}();t.default=n},"./src/main/erdiagram/exports.ts":
+/*! exports provided: default */function(e,t,r){"use strict";r.r(t);var n=function(){function e(){}return e.prototype.mergeWithDefaultConfig=function(e){return this.mergeConfigs(this.getDefaultConfig(),e)},e}();t.default=n},"./src/main/erdiagram/common/config/exports.ts":
+/*!*****************************************************!*\
+  !*** ./src/main/erdiagram/common/config/exports.ts ***!
+  \*****************************************************/
+/*! no static exports found */function(e,t){},"./src/main/erdiagram/common/exports.ts":
+/*!**********************************************!*\
+  !*** ./src/main/erdiagram/common/exports.ts ***!
+  \**********************************************/
+/*! no static exports found */function(e,t,r){"use strict";r.r(t);var n=r(/*! ./config/exports */"./src/main/erdiagram/common/config/exports.ts");for(var o in n)["default"].indexOf(o)<0&&function(e){r.d(t,e,(function(){return n[e]}))}(o)},"./src/main/erdiagram/exports.ts":
 /*!***************************************!*\
   !*** ./src/main/erdiagram/exports.ts ***!
   \***************************************/
-/*! no static exports found */function(e,t,r){"use strict";r.r(t);var n=r(/*! ./generator/exports */"./src/main/erdiagram/generator/exports.ts");for(var o in n)["default"].indexOf(o)<0&&function(e){r.d(t,e,(function(){return n[e]}))}(o);var a=r(/*! ./parser/exports */"./src/main/erdiagram/parser/exports.ts");r.d(t,"EntityRelationshipModelParserConfigManager",(function(){return a.EntityRelationshipModelParserConfigManager})),r.d(t,"entityRelationshipModelParserConfigManager",(function(){return a.entityRelationshipModelParserConfigManager})),r.d(t,"Cardinality",(function(){return a.Cardinality})),r.d(t,"Direction",(function(){return a.Direction})),r.d(t,"EntityPropertyType",(function(){return a.EntityPropertyType})),r.d(t,"EntityRelationshipModelParser",(function(){return a.EntityRelationshipModelParser}))},"./src/main/erdiagram/generator/common/case-format/AbstractCamelCaseFormat.ts":
+/*! no static exports found */function(e,t,r){"use strict";r.r(t);var n=r(/*! ./common/exports */"./src/main/erdiagram/common/exports.ts");for(var o in n)["default"].indexOf(o)<0&&function(e){r.d(t,e,(function(){return n[e]}))}(o);var a=r(/*! ./generator/exports */"./src/main/erdiagram/generator/exports.ts");for(var o in a)["default"].indexOf(o)<0&&function(e){r.d(t,e,(function(){return a[e]}))}(o);var i=r(/*! ./parser/exports */"./src/main/erdiagram/parser/exports.ts");r.d(t,"EntityRelationshipModelParserConfigManager",(function(){return i.EntityRelationshipModelParserConfigManager})),r.d(t,"entityRelationshipModelParserConfigManager",(function(){return i.entityRelationshipModelParserConfigManager})),r.d(t,"Cardinality",(function(){return i.Cardinality})),r.d(t,"Direction",(function(){return i.Direction})),r.d(t,"EntityPropertyType",(function(){return i.EntityPropertyType})),r.d(t,"EntityRelationshipModelParser",(function(){return i.EntityRelationshipModelParser}))},"./src/main/erdiagram/generator/common/case-format/AbstractCamelCaseFormat.ts":
 /*!************************************************************************************!*\
   !*** ./src/main/erdiagram/generator/common/case-format/AbstractCamelCaseFormat.ts ***!
   \************************************************************************************/
