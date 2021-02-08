@@ -1,4 +1,4 @@
-/* ========================= User class ========================= */
+/* ========== User class ========== */
 
 package com.example.erdiagram;
 
@@ -112,7 +112,7 @@ public class User {
 
 }
 
-/* ========================= Country class ========================= */
+/* ========== Country class ========== */
 
 package com.example.erdiagram;
 
@@ -153,7 +153,7 @@ public class Country {
 
 }
 
-/* ========================= Permission class ========================= */
+/* ========== Permission class ========== */
 
 package com.example.erdiagram;
 
@@ -205,7 +205,7 @@ public class Permission {
 
 }
 
-/* ========================= Tree class ========================= */
+/* ========== Tree class ========== */
 
 package com.example.erdiagram;
 
@@ -236,7 +236,7 @@ public class Tree {
 
 }
 
-/* ========================= TreeNode class ========================= */
+/* ========== TreeNode class ========== */
 
 package com.example.erdiagram;
 
