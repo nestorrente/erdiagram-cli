@@ -18,6 +18,8 @@ public class User {
     @Nullable
     private LocalDate birthday;
     @NonNull
+    private Short userNum;
+    @NonNull
     private Boolean active;
     @NonNull
     private Country country;
@@ -60,6 +62,14 @@ public class User {
 
     public LocalDate setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public Short getUserNum() {
+        return userNum;
+    }
+
+    public Short setUserNum(Short userNum) {
+        this.userNum = userNum;
     }
 
     public Boolean getActive() {

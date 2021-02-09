@@ -3,10 +3,12 @@ CREATE TABLE `User` (
     `username` VARCHAR(50) NOT NULL,
     `name` VARCHAR(50) NOT NULL,
     `birthday` DATE,
+    `userNum` SHORT NOT NULL AUTO_INCREMENT,
     `active` BOOLEAN NOT NULL,
     `countryId` BIGINT NOT NULL,
     `alternativeCountryId` BIGINT,
-    CONSTRAINT `User_pk` PRIMARY KEY (`id`)
+    CONSTRAINT `User_pk` PRIMARY KEY (`id`),
+    CONSTRAINT `User_username_unique` UNIQUE (`username`)
 );
 
 CREATE TABLE `Country` (

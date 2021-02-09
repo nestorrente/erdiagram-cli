@@ -9,6 +9,7 @@ import {
 	EntityRelationshipModelToDatabaseCodeConverter,
 	JavaClassModelToCodeConverter,
 	MySqlDatabaseModelToCodeConverter,
+	SqlServerDatabaseModelToCodeConverter,
 	TypeScriptClassModelToCodeConverter
 } from '@nestorrente/erdiagram';
 
@@ -16,7 +17,7 @@ const args = yargs
 		.option('format', {
 			alias: 'f',
 			type: 'string',
-			description: 'Output format (mysql/java)'
+			description: 'Output format (mysql/sqlserver/java/typescript)'
 		})
 		.option('output', {
 			alias: 'o',
@@ -41,6 +42,11 @@ const modelCodeGenerator = ((): EntityRelationshipModelToCodeConverter => {
 			return new EntityRelationshipModelToDatabaseCodeConverter(
 					new DatabaseModelGenerator(),
 					new MySqlDatabaseModelToCodeConverter()
+			);
+		case 'sqlserver':
+			return new EntityRelationshipModelToDatabaseCodeConverter(
+					new DatabaseModelGenerator(),
+					new SqlServerDatabaseModelToCodeConverter()
 			);
 		case 'java':
 			return new EntityRelationshipModelToClassCodeConverter(

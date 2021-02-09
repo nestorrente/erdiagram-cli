@@ -1,7 +1,8 @@
 User
-	username text(50)
+	username! text(50)
 	name text(50)
 	birthday? date
+	userNum+ short
 	active bool
 
 Country

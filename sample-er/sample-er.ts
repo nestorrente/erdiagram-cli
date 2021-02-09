@@ -3,6 +3,7 @@ interface User {
     username: string;
     name: string;
     birthday?: Date;
+    userNum: number;
     active: boolean;
     country: Country;
     alternativeCountry?: Country;
