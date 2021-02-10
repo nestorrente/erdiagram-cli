@@ -4,7 +4,7 @@ CREATE TABLE "User" (
     "Username" nvarchar(50) NOT NULL,
     "Name" nvarchar(50) NOT NULL,
     "Birthday" date,
-    "UserNum" smallint NOT NULL DEFAULT NEXT VALUE FOR User_UserNum_seq,
+    "UserNum" smallint NOT NULL DEFAULT NEXT VALUE FOR "User_UserNum_seq",
     "Active" bit NOT NULL,
     "CountryId" bigint NOT NULL,
     "AlternativeCountryId" bigint,

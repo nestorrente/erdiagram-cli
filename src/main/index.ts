@@ -9,6 +9,7 @@ import {
 	EntityRelationshipModelToDatabaseCodeConverter,
 	JavaClassModelToCodeConverter,
 	MySqlDatabaseModelToCodeConverter,
+	OracleDatabaseModelToCodeConverter,
 	SqlServerDatabaseModelToCodeConverter,
 	TypeScriptClassModelToCodeConverter
 } from '@nestorrente/erdiagram';
@@ -47,6 +48,11 @@ const modelCodeGenerator = ((): EntityRelationshipModelToCodeConverter => {
 			return new EntityRelationshipModelToDatabaseCodeConverter(
 					new DatabaseModelGenerator(),
 					new SqlServerDatabaseModelToCodeConverter()
+			);
+		case 'oracle':
+			return new EntityRelationshipModelToDatabaseCodeConverter(
+					new DatabaseModelGenerator(),
+					new OracleDatabaseModelToCodeConverter()
 			);
 		case 'java':
 			return new EntityRelationshipModelToClassCodeConverter(
