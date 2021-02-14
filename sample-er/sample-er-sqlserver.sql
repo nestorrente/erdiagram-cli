@@ -1,55 +1,55 @@
 CREATE SEQUENCE "User_UserNum_seq" START WITH 1;
 CREATE TABLE "User" (
-    "Id" bigint NOT NULL IDENTITY(1, 1),
-    "Username" nvarchar(50) NOT NULL,
-    "Name" nvarchar(50) NOT NULL,
-    "Birthday" date,
-    "UserNum" smallint NOT NULL DEFAULT NEXT VALUE FOR "User_UserNum_seq",
-    "Active" bit NOT NULL,
-    "CountryId" bigint NOT NULL,
-    "AlternativeCountryId" bigint,
+    "Id" BIGINT NOT NULL IDENTITY(1, 1),
+    "Username" NVARCHAR(50) NOT NULL,
+    "Name" NVARCHAR(50) NOT NULL,
+    "Birthday" DATE,
+    "UserNum" SMALLINT NOT NULL DEFAULT NEXT VALUE FOR "User_UserNum_seq",
+    "Active" BIT NOT NULL,
+    "CountryId" BIGINT NOT NULL,
+    "AlternativeCountryId" BIGINT,
     CONSTRAINT "User_pk" PRIMARY KEY ("Id"),
     CONSTRAINT "User_Username_unique" UNIQUE ("Username")
 );
 
 CREATE TABLE "Country" (
-    "Id" bigint NOT NULL IDENTITY(1, 1),
-    "Code" nvarchar(5) NOT NULL,
-    "Name" nvarchar(100) NOT NULL,
+    "Id" BIGINT NOT NULL IDENTITY(1, 1),
+    "Code" NVARCHAR(5) NOT NULL,
+    "Name" NVARCHAR(100) NOT NULL,
     CONSTRAINT "Country_pk" PRIMARY KEY ("Id")
 );
 
 CREATE TABLE "Permission" (
-    "Id" bigint NOT NULL IDENTITY(1, 1),
-    "Code" nvarchar(30) NOT NULL,
-    "Description" nvarchar(200) NOT NULL,
+    "Id" BIGINT NOT NULL IDENTITY(1, 1),
+    "Code" NVARCHAR(30) NOT NULL,
+    "Description" NVARCHAR(200) NOT NULL,
     CONSTRAINT "Permission_pk" PRIMARY KEY ("Id")
 );
 
 CREATE TABLE "Tree" (
-    "Id" bigint NOT NULL IDENTITY(1, 1),
-    "HeadNodeId" bigint NOT NULL,
+    "Id" BIGINT NOT NULL IDENTITY(1, 1),
+    "HeadNodeId" BIGINT NOT NULL,
     CONSTRAINT "Tree_pk" PRIMARY KEY ("Id")
 );
 
 CREATE TABLE "TreeNode" (
-    "Id" bigint NOT NULL IDENTITY(1, 1),
-    "Value" int NOT NULL,
-    "ParentId" bigint,
+    "Id" BIGINT NOT NULL IDENTITY(1, 1),
+    "Value" INT NOT NULL,
+    "ParentId" BIGINT,
     CONSTRAINT "TreeNode_pk" PRIMARY KEY ("Id")
 );
 
 CREATE TABLE "UserPermission" (
-    "Id" bigint NOT NULL IDENTITY(1, 1),
-    "UserId" bigint NOT NULL,
-    "PermissionId" bigint NOT NULL,
+    "Id" BIGINT NOT NULL IDENTITY(1, 1),
+    "UserId" BIGINT NOT NULL,
+    "PermissionId" BIGINT NOT NULL,
     CONSTRAINT "UserPermission_pk" PRIMARY KEY ("Id")
 );
 
 CREATE TABLE "Follows" (
-    "Id" bigint NOT NULL IDENTITY(1, 1),
-    "FollowerId" bigint NOT NULL,
-    "FollowId" bigint NOT NULL,
+    "Id" BIGINT NOT NULL IDENTITY(1, 1),
+    "FollowerId" BIGINT NOT NULL,
+    "FollowId" BIGINT NOT NULL,
     CONSTRAINT "Follows_pk" PRIMARY KEY ("Id")
 );
 
