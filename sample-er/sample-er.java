@@ -2,8 +2,8 @@
 
 package com.example.erdiagram;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.time.LocalDate;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
