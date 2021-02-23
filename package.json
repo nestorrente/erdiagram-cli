@@ -1,54 +1,54 @@
 {
-  "name": "@nestorrente/erdiagram-cli",
-  "version": "0.1.0",
-  "description": "Entity-Relationship Diagram Code Generator",
-  "scripts": {
-    "test": "jest --config jest.config.js",
-    "build": "webpack",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "tslint -p tsconfig.json"
-  },
-  "keywords": [
-    "erdiagram",
-    "erd",
-    "entity",
-    "relationship",
-    "entity-relationship",
-    "sql",
-    "mysql",
-    "java",
-    "code",
-    "generation",
-    "generator",
-    "erdiagram-cli",
-    "cli"
-  ],
-  "author": "",
-  "license": "MIT",
-  "homepage": "https://github.com/nestorrente/erdiagram-cli",
-  "devDependencies": {
-    "@types/jest": "^25.1.4",
-    "@types/node": "^13.9.0",
-    "jest": "^25.1.0",
-    "jest-webpack-resolver": "^0.3.0",
-    "prettier": "^1.19.1",
-    "ts-jest": "^25.2.1",
-    "ts-loader": "^6.2.1",
-    "tsconfig-paths-webpack-plugin": "^3.3.0",
-    "tslint": "^6.0.0",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.8.3",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11"
-  },
-  "files": [
-    "dist/**/*"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nestorrente/erdiagram-cli.git"
-  },
-  "dependencies": {
-    "@nestorrente/erdiagram": "file:./lib/nestorrente-erdiagram-0.1.0.tgz"
-  }
+	"name": "@nestorrente/erdiagram-cli",
+	"version": "0.1.0",
+	"description": "Entity-Relationship Diagram Code Generator",
+	"scripts": {
+		"test": "jest --config jest.config.js",
+		"build": "webpack",
+		"format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+		"lint": "tslint -p tsconfig.json"
+	},
+	"keywords": [
+		"erdiagram",
+		"erd",
+		"entity",
+		"relationship",
+		"entity-relationship",
+		"sql",
+		"mysql",
+		"java",
+		"code",
+		"generation",
+		"generator",
+		"erdiagram-cli",
+		"cli"
+	],
+	"author": "",
+	"license": "MIT",
+	"homepage": "https://github.com/nestorrente/erdiagram-cli",
+	"devDependencies": {
+		"@types/jest": "^25.1.4",
+		"@types/node": "^13.9.0",
+		"jest": "^25.1.0",
+		"jest-webpack-resolver": "^0.3.0",
+		"prettier": "^1.19.1",
+		"ts-jest": "^25.2.1",
+		"ts-loader": "^6.2.1",
+		"tsconfig-paths-webpack-plugin": "^3.3.0",
+		"tslint": "^6.0.0",
+		"tslint-config-prettier": "^1.18.0",
+		"typescript": "^3.8.3",
+		"webpack": "^4.42.0",
+		"webpack-cli": "^3.3.11"
+	},
+	"files": [
+		"dist/**/*"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nestorrente/erdiagram-cli.git"
+	},
+	"dependencies": {
+		"@nestorrente/erdiagram": "0.1.0-alpha.0"
+	}
 }
