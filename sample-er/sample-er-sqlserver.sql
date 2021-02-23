@@ -29,7 +29,8 @@ CREATE TABLE "Permission" (
 CREATE TABLE "Tree" (
     "Id" BIGINT NOT NULL IDENTITY(1, 1),
     "HeadNodeId" BIGINT NOT NULL,
-    CONSTRAINT "Tree_pk" PRIMARY KEY ("Id")
+    CONSTRAINT "Tree_pk" PRIMARY KEY ("Id"),
+    CONSTRAINT "Tree_HeadNodeId_unique" UNIQUE ("HeadNodeId")
 );
 
 CREATE TABLE "TreeNode" (

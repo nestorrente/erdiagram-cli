@@ -28,7 +28,8 @@ CREATE TABLE `Permission` (
 CREATE TABLE `Tree` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `headNodeId` BIGINT NOT NULL,
-    CONSTRAINT `Tree_pk` PRIMARY KEY (`id`)
+    CONSTRAINT `Tree_pk` PRIMARY KEY (`id`),
+    CONSTRAINT `Tree_headNodeId_unique` UNIQUE (`headNodeId`)
 );
 
 CREATE TABLE `TreeNode` (
