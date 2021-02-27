@@ -131,18 +131,18 @@ import org.springframework.lang.NonNull;
 public class Country {
 
     @NonNull
-    private Long id;
+    private Long theCountryId;
     @NonNull
     private String code;
     @NonNull
     private String name;
 
-    public Long getId() {
-        return id;
+    public Long getTheCountryId() {
+        return theCountryId;
     }
 
-    public Long setId(Long id) {
-        this.id = id;
+    public Long setTheCountryId(Long theCountryId) {
+        this.theCountryId = theCountryId;
     }
 
     public String getCode() {

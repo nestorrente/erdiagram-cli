@@ -12,10 +12,10 @@ CREATE TABLE `User` (
 );
 
 CREATE TABLE `Country` (
-    `id` BIGINT NOT NULL AUTO_INCREMENT,
+    `theCountryId` BIGINT NOT NULL AUTO_INCREMENT,
     `code` VARCHAR(5) NOT NULL,
     `name` VARCHAR(100) NOT NULL,
-    CONSTRAINT `Country_pk` PRIMARY KEY (`id`)
+    CONSTRAINT `Country_pk` PRIMARY KEY (`theCountryId`)
 );
 
 CREATE TABLE `Permission` (
@@ -53,8 +53,8 @@ CREATE TABLE `Follows` (
     CONSTRAINT `Follows_pk` PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `User` ADD CONSTRAINT `User_countryId_fk` FOREIGN KEY (`countryId`) REFERENCES `Country` (`id`);
-ALTER TABLE `User` ADD CONSTRAINT `User_alternativeCountryId_fk` FOREIGN KEY (`alternativeCountryId`) REFERENCES `Country` (`id`);
+ALTER TABLE `User` ADD CONSTRAINT `User_countryId_fk` FOREIGN KEY (`countryId`) REFERENCES `Country` (`theCountryId`);
+ALTER TABLE `User` ADD CONSTRAINT `User_alternativeCountryId_fk` FOREIGN KEY (`alternativeCountryId`) REFERENCES `Country` (`theCountryId`);
 
 ALTER TABLE `Tree` ADD CONSTRAINT `Tree_headNodeId_fk` FOREIGN KEY (`headNodeId`) REFERENCES `TreeNode` (`id`);
 

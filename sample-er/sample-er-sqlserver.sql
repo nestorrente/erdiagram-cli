@@ -13,10 +13,10 @@ CREATE TABLE "User" (
 );
 
 CREATE TABLE "Country" (
-    "Id" BIGINT NOT NULL IDENTITY(1, 1),
+    "TheCountryId" BIGINT NOT NULL IDENTITY(1, 1),
     "Code" NVARCHAR(5) NOT NULL,
     "Name" NVARCHAR(100) NOT NULL,
-    CONSTRAINT "Country_pk" PRIMARY KEY ("Id")
+    CONSTRAINT "Country_pk" PRIMARY KEY ("TheCountryId")
 );
 
 CREATE TABLE "Permission" (
@@ -54,8 +54,8 @@ CREATE TABLE "Follows" (
     CONSTRAINT "Follows_pk" PRIMARY KEY ("Id")
 );
 
-ALTER TABLE "User" ADD CONSTRAINT "User_CountryId_fk" FOREIGN KEY ("CountryId") REFERENCES "Country" ("Id");
-ALTER TABLE "User" ADD CONSTRAINT "User_AlternativeCountryId_fk" FOREIGN KEY ("AlternativeCountryId") REFERENCES "Country" ("Id");
+ALTER TABLE "User" ADD CONSTRAINT "User_CountryId_fk" FOREIGN KEY ("CountryId") REFERENCES "Country" ("TheCountryId");
+ALTER TABLE "User" ADD CONSTRAINT "User_AlternativeCountryId_fk" FOREIGN KEY ("AlternativeCountryId") REFERENCES "Country" ("TheCountryId");
 
 ALTER TABLE "Tree" ADD CONSTRAINT "Tree_HeadNodeId_fk" FOREIGN KEY ("HeadNodeId") REFERENCES "TreeNode" ("Id");
 

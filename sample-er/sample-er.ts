@@ -13,7 +13,7 @@ interface User {
 }
 
 interface Country {
-    id: number;
+    theCountryId: number;
     code: string;
     name: string;
 }

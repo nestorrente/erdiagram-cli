@@ -49,6 +49,6 @@
 		"url": "https://github.com/nestorrente/erdiagram-cli.git"
 	},
 	"dependencies": {
-		"@nestorrente/erdiagram": "0.1.0-alpha.0"
+		"@nestorrente/erdiagram": "0.1.0-alpha.1"
 	}
 }
