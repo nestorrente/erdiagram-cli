@@ -79,9 +79,9 @@ export class CommandLineArgumentsResolver {
 		return {
 			createConfig,
 			configFilePath: yargsArgs.config,
-			inputFilePath: createConfig ? this.processInputFilePath(yargsArgs._[0]) : undefined,
+			inputFilePath: createConfig ? undefined : this.processInputFilePath(yargsArgs._[0]),
 			outputFilePath: yargsArgs.output,
-			outputFormat: createConfig ? this.processOutputFormat(yargsArgs.format as CommandLineOutputFormat) : undefined
+			outputFormat: createConfig ? undefined : this.processOutputFormat(yargsArgs.format as CommandLineOutputFormat)
 		};
 
 	}

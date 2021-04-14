@@ -3,7 +3,7 @@ interface User {
     username: string;
     name: string;
     birthday?: Date;
-    avatar?: number[];
+    avatar?: Uint8Array;
     active: boolean;
     country: Country;
     alternativeCountry?: Country;

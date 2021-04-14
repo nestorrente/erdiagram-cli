@@ -1,4 +1,4 @@
-CREATE TABLE `USER` (
+CREATE TABLE `User` (
     `userId` BIGINT NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(50) NOT NULL,
     `name` VARCHAR(50) NOT NULL,
@@ -7,61 +7,61 @@ CREATE TABLE `USER` (
     `active` BOOLEAN NOT NULL,
     `countryId` BIGINT NOT NULL,
     `alternativeCountryId` BIGINT,
-    CONSTRAINT `USER_pk` PRIMARY KEY (`userId`),
-    CONSTRAINT `USER_username_unique` UNIQUE (`username`)
+    CONSTRAINT `User_pk` PRIMARY KEY (`userId`),
+    CONSTRAINT `User_username_unique` UNIQUE (`username`)
 );
 
-CREATE TABLE `COUNTRY` (
+CREATE TABLE `Country` (
     `theCountryId` BIGINT NOT NULL AUTO_INCREMENT,
     `code` VARCHAR(5) NOT NULL,
     `name` VARCHAR(100) NOT NULL,
-    CONSTRAINT `COUNTRY_pk` PRIMARY KEY (`theCountryId`)
+    CONSTRAINT `Country_pk` PRIMARY KEY (`theCountryId`)
 );
 
-CREATE TABLE `PERMISSION` (
+CREATE TABLE `Permission` (
     `permissionId` BIGINT NOT NULL AUTO_INCREMENT,
     `code` VARCHAR(30) NOT NULL,
     `description` VARCHAR(200) NOT NULL,
-    CONSTRAINT `PERMISSION_pk` PRIMARY KEY (`permissionId`)
+    CONSTRAINT `Permission_pk` PRIMARY KEY (`permissionId`)
 );
 
-CREATE TABLE `TREE` (
+CREATE TABLE `Tree` (
     `treeId` BIGINT NOT NULL AUTO_INCREMENT,
     `headNodeId` BIGINT NOT NULL,
-    CONSTRAINT `TREE_pk` PRIMARY KEY (`treeId`),
-    CONSTRAINT `TREE_headNodeId_unique` UNIQUE (`headNodeId`)
+    CONSTRAINT `Tree_pk` PRIMARY KEY (`treeId`),
+    CONSTRAINT `Tree_headNodeId_unique` UNIQUE (`headNodeId`)
 );
 
-CREATE TABLE `TREE_NODE` (
+CREATE TABLE `TreeNode` (
     `treeNodeId` BIGINT NOT NULL AUTO_INCREMENT,
     `value` INT NOT NULL,
     `parentId` BIGINT,
-    CONSTRAINT `TREE_NODE_pk` PRIMARY KEY (`treeNodeId`)
+    CONSTRAINT `TreeNode_pk` PRIMARY KEY (`treeNodeId`)
 );
 
-CREATE TABLE `USER_PERMISSION` (
+CREATE TABLE `UserPermission` (
     `userPermissionId` BIGINT NOT NULL AUTO_INCREMENT,
     `userId` BIGINT NOT NULL,
     `permissionId` BIGINT NOT NULL,
-    CONSTRAINT `USER_PERMISSION_pk` PRIMARY KEY (`userPermissionId`)
+    CONSTRAINT `UserPermission_pk` PRIMARY KEY (`userPermissionId`)
 );
 
-CREATE TABLE `FOLLOWS` (
+CREATE TABLE `Follows` (
     `followsId` BIGINT NOT NULL AUTO_INCREMENT,
     `followerId` BIGINT NOT NULL,
     `followId` BIGINT NOT NULL,
-    CONSTRAINT `FOLLOWS_pk` PRIMARY KEY (`followsId`)
+    CONSTRAINT `Follows_pk` PRIMARY KEY (`followsId`)
 );
 
-ALTER TABLE `USER` ADD CONSTRAINT `USER_countryId_fk` FOREIGN KEY (`countryId`) REFERENCES `COUNTRY` (`theCountryId`);
-ALTER TABLE `USER` ADD CONSTRAINT `USER_alternativeCountryId_fk` FOREIGN KEY (`alternativeCountryId`) REFERENCES `COUNTRY` (`theCountryId`);
+ALTER TABLE `User` ADD CONSTRAINT `User_countryId_fk` FOREIGN KEY (`countryId`) REFERENCES `Country` (`theCountryId`);
+ALTER TABLE `User` ADD CONSTRAINT `User_alternativeCountryId_fk` FOREIGN KEY (`alternativeCountryId`) REFERENCES `Country` (`theCountryId`);
 
-ALTER TABLE `TREE` ADD CONSTRAINT `TREE_headNodeId_fk` FOREIGN KEY (`headNodeId`) REFERENCES `TREE_NODE` (`treeNodeId`);
+ALTER TABLE `Tree` ADD CONSTRAINT `Tree_headNodeId_fk` FOREIGN KEY (`headNodeId`) REFERENCES `TreeNode` (`treeNodeId`);
 
-ALTER TABLE `TREE_NODE` ADD CONSTRAINT `TREE_NODE_parentId_fk` FOREIGN KEY (`parentId`) REFERENCES `TREE_NODE` (`treeNodeId`);
+ALTER TABLE `TreeNode` ADD CONSTRAINT `TreeNode_parentId_fk` FOREIGN KEY (`parentId`) REFERENCES `TreeNode` (`treeNodeId`);
 
-ALTER TABLE `USER_PERMISSION` ADD CONSTRAINT `USER_PERMISSION_userId_fk` FOREIGN KEY (`userId`) REFERENCES `USER` (`userId`);
-ALTER TABLE `USER_PERMISSION` ADD CONSTRAINT `USER_PERMISSION_permissionId_fk` FOREIGN KEY (`permissionId`) REFERENCES `PERMISSION` (`permissionId`);
+ALTER TABLE `UserPermission` ADD CONSTRAINT `UserPermission_userId_fk` FOREIGN KEY (`userId`) REFERENCES `User` (`userId`);
+ALTER TABLE `UserPermission` ADD CONSTRAINT `UserPermission_permissionId_fk` FOREIGN KEY (`permissionId`) REFERENCES `Permission` (`permissionId`);
 
-ALTER TABLE `FOLLOWS` ADD CONSTRAINT `FOLLOWS_followerId_fk` FOREIGN KEY (`followerId`) REFERENCES `USER` (`userId`);
-ALTER TABLE `FOLLOWS` ADD CONSTRAINT `FOLLOWS_followId_fk` FOREIGN KEY (`followId`) REFERENCES `USER` (`userId`);
+ALTER TABLE `Follows` ADD CONSTRAINT `Follows_followerId_fk` FOREIGN KEY (`followerId`) REFERENCES `User` (`userId`);
+ALTER TABLE `Follows` ADD CONSTRAINT `Follows_followId_fk` FOREIGN KEY (`followId`) REFERENCES `User` (`userId`);
