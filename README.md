@@ -2,6 +2,8 @@
 
 This application is the CLI version of the [ERDiagram library](https://github.com/nestorrente/erdiagram).
 
+Please, refer to the library docs for further information about _ERDiagram_ features.
+
 ## Installation
 
 ```shell
