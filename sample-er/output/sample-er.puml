@@ -1,0 +1,40 @@
+@startuml
+
+class User {
+    {field} username!: text(50)
+    {field} name: text(50)
+    {field} birthday?: date
+    {field} avatar?: blob
+    {field} active: bool
+}
+
+class Country {
+    {field} theCountryId: identity
+    {field} code: text(5)
+    {field} name: text(100)
+}
+
+class Permission {
+    {field} code: text(30)
+    {field} description: text(200)
+}
+
+class Tree {}
+
+class TreeNode {
+    {field} value: int
+}
+
+User "*" --> "1" Country
+
+User "*" --> "0..1" Country
+
+User "*" <--> "*" Permission
+
+User "*" <--> "*" User : Follows
+
+TreeNode "*" <--> "0..1" TreeNode
+
+Tree "1" --> "1" TreeNode
+
+@enduml

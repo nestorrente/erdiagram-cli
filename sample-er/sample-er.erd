@@ -2,11 +2,11 @@ User
 	username! text(50)
 	name text(50)
 	birthday? date
-	userNum+ short
+	avatar? blob
 	active bool
 
 Country
-    theCountryId identifier
+    theCountryId identity
 	code text(5)
 	name text(100)
 

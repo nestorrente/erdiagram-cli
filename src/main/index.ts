@@ -1,96 +1,62 @@
-import yargs from 'yargs';
 import fs from 'fs';
-import {
-	ClassModelGenerator,
-	DatabaseModelGenerator,
-	EntityRelationshipModelParser,
-	EntityRelationshipModelToClassCodeConverter,
-	EntityRelationshipModelToCodeConverter,
-	EntityRelationshipModelToDatabaseCodeConverter,
-	JavaClassModelToCodeConverter,
-	MySqlDatabaseModelToCodeConverter,
-	OracleDatabaseModelToCodeConverter,
-	SqlServerDatabaseModelToCodeConverter,
-	TypeScriptClassModelToCodeConverter
-} from '@nestorrente/erdiagram';
+import {EntityRelationshipModelParser} from '@nestorrente/erdiagram';
+import {EntityRelationshipModelToCodeConverterProvider} from '@/resolver/EntityRelationshipModelToCodeConverterProvider';
+import {commandLineArgumentsResolver} from '@/cl-args/CommandLineArgumentsResolver';
+import {configFileManager} from '@/config/ConfigFileManager';
+import OutputStrategyResolver from '@/resolver/output-strategy/OutputStrategyResolver';
 
-const args = yargs
-		.option('format', {
-			alias: 'f',
-			type: 'string',
-			description: 'Output format (mysql/sqlserver/java/typescript)'
-		})
-		.option('output', {
-			alias: 'o',
-			type: 'string',
-			description: 'Output file path (console if not specified)'
-		})
-		.help()
-		.alias('help', 'h')
-		.version()
-		.alias('version', 'v')
-		.argv;
+run().then(finishSucessfully).catch(finishWithError);
 
-const config = {
-	inputFile: args._[0],
-	format: (args.format ?? 'mysql').toLowerCase(),
-	outputFile: args.output
-};
+async function run() {
 
-const modelCodeGenerator = ((): EntityRelationshipModelToCodeConverter => {
-	switch (config.format) {
-		case 'mysql':
-			return new EntityRelationshipModelToDatabaseCodeConverter(
-					new DatabaseModelGenerator(),
-					new MySqlDatabaseModelToCodeConverter()
-			);
-		case 'sqlserver':
-			return new EntityRelationshipModelToDatabaseCodeConverter(
-					new DatabaseModelGenerator(),
-					new SqlServerDatabaseModelToCodeConverter()
-			);
-		case 'oracle':
-			return new EntityRelationshipModelToDatabaseCodeConverter(
-					new DatabaseModelGenerator(),
-					new OracleDatabaseModelToCodeConverter()
-			);
-		case 'java':
-			return new EntityRelationshipModelToClassCodeConverter(
-					new ClassModelGenerator(),
-					new JavaClassModelToCodeConverter({
-						generatedClassesPackage: 'com.example.erdiagram',
-						useSpringNullabilityAnnotations: true
-					})
-			);
-		case 'typescript':
-			return new EntityRelationshipModelToClassCodeConverter(
-					new ClassModelGenerator(),
-					new TypeScriptClassModelToCodeConverter()
-			);
-		default:
-			throw new Error(`Unknown format: ${config.format}`);
-	}
-})();
+	const {
+		createConfig,
+		configFilePath,
+		inputFilePath,
+		outputFilePath,
+		outputFormat
+	} = commandLineArgumentsResolver.resolveCommandLineArguments();
 
-type OutputCallback = (text: string) => void;
-
-const outputCallback = ((): OutputCallback => {
-
-	const {outputFile} = config;
-
-	if (outputFile) {
-		return text => fs.writeFileSync(outputFile, text + '\n');
-	} else {
-		return text => console.log(text);
+	if (createConfig) {
+		await configFileManager.createConfigFile(configFilePath);
+		return;
 	}
 
-})();
+	if(!inputFilePath) {
+		throw new Error('Missing input file (use -h for more information)');
+	}
 
-const inputCode = fs.readFileSync(config.inputFile).toString();
+	if(!outputFormat) {
+		throw new Error('Missing output format (use -h for more information)');
+	}
 
-const model = new EntityRelationshipModelParser({
-	allowUnknownEntities: true
-}).parseModel(inputCode);
-const outputCode = modelCodeGenerator.generateCode(model);
+	const config = configFileManager.parseConfigFile(configFilePath);
 
-outputCallback(outputCode);
+	const erModelParser = new EntityRelationshipModelParser(config.parser);
+	const erModelToCodeConverterProvider = new EntityRelationshipModelToCodeConverterProvider(config);
+	const erModelToCodeConverter = erModelToCodeConverterProvider.getERModelToCodeConverter(outputFormat);
+	const outputStrategyResolver = new OutputStrategyResolver();
+
+	const inputCode = fs.readFileSync(inputFilePath).toString();
+	const model = erModelParser.parseModel(inputCode);
+	const outputCode = erModelToCodeConverter.convertToCode(model);
+
+	const outputStrategy = outputStrategyResolver.resolveOutputStrategy(outputFilePath);
+	outputStrategy.write(outputCode);
+
+}
+
+function finishSucessfully() {
+	return process.exit();
+}
+
+function finishWithError(e: any) {
+
+	const errorMessage = 'message' in e ? e.message : e;
+
+	process.stderr.write(errorMessage);
+	process.stderr.write('\n');
+
+	process.exit(-1);
+
+}

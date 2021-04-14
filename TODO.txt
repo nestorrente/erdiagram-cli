@@ -1,1 +1,0 @@
-- Permitir enviar configuraciones a los diferentes objetos a través de la línea de comandos.

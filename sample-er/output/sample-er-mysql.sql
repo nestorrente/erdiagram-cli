@@ -1,0 +1,67 @@
+CREATE TABLE `USER` (
+    `userId` BIGINT NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(50) NOT NULL,
+    `name` VARCHAR(50) NOT NULL,
+    `birthday` DATE,
+    `avatar` BLOB,
+    `active` BOOLEAN NOT NULL,
+    `countryId` BIGINT NOT NULL,
+    `alternativeCountryId` BIGINT,
+    CONSTRAINT `USER_pk` PRIMARY KEY (`userId`),
+    CONSTRAINT `USER_username_unique` UNIQUE (`username`)
+);
+
+CREATE TABLE `COUNTRY` (
+    `theCountryId` BIGINT NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(5) NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
+    CONSTRAINT `COUNTRY_pk` PRIMARY KEY (`theCountryId`)
+);
+
+CREATE TABLE `PERMISSION` (
+    `permissionId` BIGINT NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(30) NOT NULL,
+    `description` VARCHAR(200) NOT NULL,
+    CONSTRAINT `PERMISSION_pk` PRIMARY KEY (`permissionId`)
+);
+
+CREATE TABLE `TREE` (
+    `treeId` BIGINT NOT NULL AUTO_INCREMENT,
+    `headNodeId` BIGINT NOT NULL,
+    CONSTRAINT `TREE_pk` PRIMARY KEY (`treeId`),
+    CONSTRAINT `TREE_headNodeId_unique` UNIQUE (`headNodeId`)
+);
+
+CREATE TABLE `TREE_NODE` (
+    `treeNodeId` BIGINT NOT NULL AUTO_INCREMENT,
+    `value` INT NOT NULL,
+    `parentId` BIGINT,
+    CONSTRAINT `TREE_NODE_pk` PRIMARY KEY (`treeNodeId`)
+);
+
+CREATE TABLE `USER_PERMISSION` (
+    `userPermissionId` BIGINT NOT NULL AUTO_INCREMENT,
+    `userId` BIGINT NOT NULL,
+    `permissionId` BIGINT NOT NULL,
+    CONSTRAINT `USER_PERMISSION_pk` PRIMARY KEY (`userPermissionId`)
+);
+
+CREATE TABLE `FOLLOWS` (
+    `followsId` BIGINT NOT NULL AUTO_INCREMENT,
+    `followerId` BIGINT NOT NULL,
+    `followId` BIGINT NOT NULL,
+    CONSTRAINT `FOLLOWS_pk` PRIMARY KEY (`followsId`)
+);
+
+ALTER TABLE `USER` ADD CONSTRAINT `USER_countryId_fk` FOREIGN KEY (`countryId`) REFERENCES `COUNTRY` (`theCountryId`);
+ALTER TABLE `USER` ADD CONSTRAINT `USER_alternativeCountryId_fk` FOREIGN KEY (`alternativeCountryId`) REFERENCES `COUNTRY` (`theCountryId`);
+
+ALTER TABLE `TREE` ADD CONSTRAINT `TREE_headNodeId_fk` FOREIGN KEY (`headNodeId`) REFERENCES `TREE_NODE` (`treeNodeId`);
+
+ALTER TABLE `TREE_NODE` ADD CONSTRAINT `TREE_NODE_parentId_fk` FOREIGN KEY (`parentId`) REFERENCES `TREE_NODE` (`treeNodeId`);
+
+ALTER TABLE `USER_PERMISSION` ADD CONSTRAINT `USER_PERMISSION_userId_fk` FOREIGN KEY (`userId`) REFERENCES `USER` (`userId`);
+ALTER TABLE `USER_PERMISSION` ADD CONSTRAINT `USER_PERMISSION_permissionId_fk` FOREIGN KEY (`permissionId`) REFERENCES `PERMISSION` (`permissionId`);
+
+ALTER TABLE `FOLLOWS` ADD CONSTRAINT `FOLLOWS_followerId_fk` FOREIGN KEY (`followerId`) REFERENCES `USER` (`userId`);
+ALTER TABLE `FOLLOWS` ADD CONSTRAINT `FOLLOWS_followId_fk` FOREIGN KEY (`followId`) REFERENCES `USER` (`userId`);

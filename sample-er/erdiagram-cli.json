@@ -1,0 +1,8 @@
+{
+  "parser": {
+    "allowUnknownEntities": true
+  },
+  "databaseModel": {
+    "idNamingStrategy": "ENTITY_NAME_PREFIX"
+  }
+}

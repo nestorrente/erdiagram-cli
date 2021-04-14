@@ -1,0 +1,46 @@
+[User|
+    username!: text(50)
+    name: text(50)
+    birthday?: date
+    avatar?: blob
+    active: bool
+]
+
+[Country|
+    theCountryId: identity
+    code: text(5)
+    name: text(100)
+]
+
+[Permission|
+    code: text(30)
+    description: text(200)
+]
+
+[Tree]
+
+[TreeNode|
+    value: int
+]
+
+[User] *->1 [Country]
+
+[User] *->0..1 [Country]
+
+[User] *<->* [Permission]
+
+[<label>Follows]
+[User] *<- [Follows]
+[Follows] ->* [User]
+
+[TreeNode] *<->0..1 [TreeNode]
+
+[Tree] 1->1 [TreeNode]
+
+#arrowSize: 1
+#gravity: 1.5
+#background: transparent
+#fill: #fefece
+#lineWidth: 1
+#stroke: #333333
+#ranker: longest-path

@@ -1,42 +1,27 @@
 /* ========== User class ========== */
 
-package com.example.erdiagram;
-
 import java.time.LocalDate;
 import java.util.List;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 public class User {
 
-    @NonNull
     private Long id;
-    @NonNull
     private String username;
-    @NonNull
     private String name;
-    @Nullable
     private LocalDate birthday;
-    @NonNull
-    private Short userNum;
-    @NonNull
+    private byte[] avatar;
     private Boolean active;
-    @NonNull
     private Country country;
-    @Nullable
     private Country alternativeCountry;
-    @NonNull
     private List<Permission> permissions;
-    @NonNull
     private List<User> follows;
-    @NonNull
     private List<User> followers;
 
     public Long getId() {
         return id;
     }
 
-    public Long setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,7 +29,7 @@ public class User {
         return username;
     }
 
-    public String setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -52,7 +37,7 @@ public class User {
         return name;
     }
 
-    public String setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -60,23 +45,23 @@ public class User {
         return birthday;
     }
 
-    public LocalDate setBirthday(LocalDate birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
-    public Short getUserNum() {
-        return userNum;
+    public byte[] getAvatar() {
+        return avatar;
     }
 
-    public Short setUserNum(Short userNum) {
-        this.userNum = userNum;
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 
     public Boolean getActive() {
         return active;
     }
 
-    public Boolean setActive(Boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
@@ -84,7 +69,7 @@ public class User {
         return country;
     }
 
-    public Country setCountry(Country country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 
@@ -92,7 +77,7 @@ public class User {
         return alternativeCountry;
     }
 
-    public Country setAlternativeCountry(Country alternativeCountry) {
+    public void setAlternativeCountry(Country alternativeCountry) {
         this.alternativeCountry = alternativeCountry;
     }
 
@@ -100,7 +85,7 @@ public class User {
         return permissions;
     }
 
-    public List<Permission> setPermissions(List<Permission> permissions) {
+    public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
     }
 
@@ -108,7 +93,7 @@ public class User {
         return follows;
     }
 
-    public List<User> setFollows(List<User> follows) {
+    public void setFollows(List<User> follows) {
         this.follows = follows;
     }
 
@@ -116,7 +101,7 @@ public class User {
         return followers;
     }
 
-    public List<User> setFollowers(List<User> followers) {
+    public void setFollowers(List<User> followers) {
         this.followers = followers;
     }
 
@@ -124,24 +109,17 @@ public class User {
 
 /* ========== Country class ========== */
 
-package com.example.erdiagram;
-
-import org.springframework.lang.NonNull;
-
 public class Country {
 
-    @NonNull
     private Long theCountryId;
-    @NonNull
     private String code;
-    @NonNull
     private String name;
 
     public Long getTheCountryId() {
         return theCountryId;
     }
 
-    public Long setTheCountryId(Long theCountryId) {
+    public void setTheCountryId(Long theCountryId) {
         this.theCountryId = theCountryId;
     }
 
@@ -149,7 +127,7 @@ public class Country {
         return code;
     }
 
-    public String setCode(String code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -157,7 +135,7 @@ public class Country {
         return name;
     }
 
-    public String setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -165,27 +143,20 @@ public class Country {
 
 /* ========== Permission class ========== */
 
-package com.example.erdiagram;
-
 import java.util.List;
-import org.springframework.lang.NonNull;
 
 public class Permission {
 
-    @NonNull
     private Long id;
-    @NonNull
     private String code;
-    @NonNull
     private String description;
-    @NonNull
     private List<User> users;
 
     public Long getId() {
         return id;
     }
 
-    public Long setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -193,7 +164,7 @@ public class Permission {
         return code;
     }
 
-    public String setCode(String code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -201,7 +172,7 @@ public class Permission {
         return description;
     }
 
-    public String setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -209,7 +180,7 @@ public class Permission {
         return users;
     }
 
-    public List<User> setUsers(List<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
@@ -217,22 +188,16 @@ public class Permission {
 
 /* ========== Tree class ========== */
 
-package com.example.erdiagram;
-
-import org.springframework.lang.NonNull;
-
 public class Tree {
 
-    @NonNull
     private Long id;
-    @NonNull
     private TreeNode headNode;
 
     public Long getId() {
         return id;
     }
 
-    public Long setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -240,7 +205,7 @@ public class Tree {
         return headNode;
     }
 
-    public TreeNode setHeadNode(TreeNode headNode) {
+    public void setHeadNode(TreeNode headNode) {
         this.headNode = headNode;
     }
 
@@ -248,28 +213,20 @@ public class Tree {
 
 /* ========== TreeNode class ========== */
 
-package com.example.erdiagram;
-
 import java.util.List;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 public class TreeNode {
 
-    @NonNull
     private Long id;
-    @NonNull
     private Integer value;
-    @Nullable
     private TreeNode parent;
-    @NonNull
     private List<TreeNode> children;
 
     public Long getId() {
         return id;
     }
 
-    public Long setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -277,7 +234,7 @@ public class TreeNode {
         return value;
     }
 
-    public Integer setValue(Integer value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
@@ -285,7 +242,7 @@ public class TreeNode {
         return parent;
     }
 
-    public TreeNode setParent(TreeNode parent) {
+    public void setParent(TreeNode parent) {
         this.parent = parent;
     }
 
@@ -293,7 +250,7 @@ public class TreeNode {
         return children;
     }
 
-    public List<TreeNode> setChildren(List<TreeNode> children) {
+    public void setChildren(List<TreeNode> children) {
         this.children = children;
     }
 
