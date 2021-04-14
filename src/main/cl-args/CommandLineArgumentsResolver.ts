@@ -1,5 +1,4 @@
 import yargs from 'yargs';
-import path from 'path';
 import {OutputFormat} from '@/output-formats';
 import CommandLineArguments from '@/cl-args/CommandLineArguments';
 
@@ -69,7 +68,7 @@ export class CommandLineArgumentsResolver {
 				})
 				.help()
 				.alias('help', 'h')
-				.version()
+				.version('1.0.0-beta.4')
 				.alias('version', 'v')
 				.usage(USAGE_MESSAGE)
 				.argv;
