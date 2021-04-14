@@ -1,9 +1,9 @@
 interface User {
-    id: number;
+    id?: number;
     username: string;
     name: string;
     birthday?: Date;
-    userNum: number;
+    avatar?: number[];
     active: boolean;
     country: Country;
     alternativeCountry?: Country;
@@ -13,25 +13,25 @@ interface User {
 }
 
 interface Country {
-    theCountryId: number;
+    theCountryId?: number;
     code: string;
     name: string;
 }
 
 interface Permission {
-    id: number;
+    id?: number;
     code: string;
     description: string;
     users: User[];
 }
 
 interface Tree {
-    id: number;
+    id?: number;
     headNode: TreeNode;
 }
 
 interface TreeNode {
-    id: number;
+    id?: number;
     value: number;
     parent?: TreeNode;
     children: TreeNode[];

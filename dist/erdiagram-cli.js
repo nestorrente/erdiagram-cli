@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /*!
- * Entity-Relationship Diagram Code Generator v1.0.0-alpha.0
+ * Entity-Relationship Diagram Code Generator v1.0.0-beta.3
  * https://github.com/nestorrente/erdiagram-cli
  *
  * Released under the MIT License.
  *
- * Build date: 2021-04-14T22:45:06.725Z
+ * Build date: 2021-04-14T23:14:02.408Z
  */!function(e){var t={};function r(a){if(t[a])return t[a].exports;var n=t[a]={i:a,l:!1,exports:{}};return e[a].call(n.exports,n,n.exports,r),n.l=!0,n.exports}r.m=e,r.c=t,r.d=function(e,t,a){r.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:a})},r.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.t=function(e,t){if(1&t&&(e=r(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var a=Object.create(null);if(r.r(a),Object.defineProperty(a,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var n in e)r.d(a,n,function(t){return e[t]}.bind(null,n));return a},r.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return r.d(t,"a",t),t},r.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},r.p="",r(r.s=58)}([function(e,t,r){
 /*!
  * Entity-Relationship Diagram Code Generator v1.0.0-beta.3
@@ -13,7 +13,7 @@
  *
  * Released under the MIT License.
  *
- * Build date: 2021-04-12T22:37:43.266Z
+ * Build date: 2021-04-14T23:03:07.138Z
  */
 var a;"undefined"!=typeof self&&self,a=function(){return(()=>{var e={"./node_modules/pluralize/pluralize.js":
 /*!*********************************************!*\
