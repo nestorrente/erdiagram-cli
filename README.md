@@ -39,13 +39,15 @@ language.
 Usage:
 
 ```shell
-erdiagram generate -f <outputFormat> [-o <outputFile>] [-c <configFile>] <input>
+erdiagram generate -f <format> <input>
 ```
 
-Options:
-  * `--config`, `-c`: config file path (if not specified, uses `erdiagram.config.json` if exists).
-  * `--format`, `-f`: output format (see below the full list of supported formats).
-  * `--output`, `-o`: output file path (prints to standard output if not specified).
+Required options:
+  * `--format <format>`, `-f <format>`: output format. See below the full list of supported formats.
+
+Additional options:
+  * `--config <file>`, `-c <file>`: config file path. If not specified, uses `erdiagram.config.json` (if exists).
+  * `--output <file>`, `-o <file>`: output file path. Prints to standard output if not specified.
 
 Supported output formats:
   * Database creation script:
@@ -69,10 +71,10 @@ By default, if the file already exists, it asks for confirmation, but this behav
 `--override` and `--preserve` options.
 
 ```shell
-erdiagram create-config [-c <configFile>]
+erdiagram create-config
 ```
 
-Options:
-* `--config`, `-c`: config file path (if not specified, uses `erdiagram.config.json` if exists).
+Additional:
+* `--config <file>`, `-c <file>`: config file path. If not specified, uses `erdiagram.config.json` if exists.
 * `--overwrite`, `-w`: overwrite existing config file without asking.
 * `--preserve`, `-p`: preserve existing config file without asking.
