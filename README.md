@@ -12,50 +12,60 @@ npm install --global @nestorrente/erdiagram-cli
 
 ## Usage
 
-You can execute the CLI command in order to generate the output code from an input entity-relationship diagram writing
-in the _ERDiagram_ language:
-
 ```shell
-erdiagram-cli -f OUTPUT_FORMAT [-o OUTPUT_FILE] [-c CONFIG_FILE] INPUT_FILE
+erdiagram <command> [options]
 ```
 
-If you don't specify any config file, `erdiagram-cli.json` will be used (if exists).
+Commands:
+  * `erdiagram generate <input>`: generate the code of an entity-relationship model.
+  * `erdiagram create-config`: create a config file with the default values.
 
-For example, this is the command you should execute if you want to generate the MySQL creation script for the
-`input_model.erd` file using the `custom_config.json` config file:
+Options:
+  * `--help`, `-h`: Show help.
+  * `--version`, `-v`  Show version number.
+
+### Generate command
+
+The execute command generates the output code from an input entity-relationship diagram written using the _ERDiagram_
+language.
+
+Usage:
 
 ```shell
-erdiagram-cli -f mysql -c custom_config.json -o creation_script.sql input_model.erd
+erdiagram generate -f <outputFormat> [-o <outputFile>] [-c <configFile>] <input>
 ```
 
-You can also generate a sample config file with all the default values:
+Options:
+  * `--config`, `-c`: config file path (if not specified, uses `erdiagram.config.json` if exists).
+  * `--format`, `-f`: output format (see below the full list of supported formats).
+  * `--output`, `-o`: output file path (prints to standard output if not specified).
+
+Supported output formats:
+  * Database creation script:
+    * `mysql`
+    * `oracle`
+    * `postgresql`, `postgres`
+    * `sqlite`
+    * `sqlserver`, `mssql`, `mssqlserver`
+  * OOP classes/interfaces:
+    * `java`
+    * `typescript`, `ts`
+  * Diagram:
+    * `nomnoml`
+    * `plantuml`
+
+### Create config command
+
+The `create-config` commands generates a config file with the default values.
+
+By default, if the file already exists, it asks for confirmation, but this behaviour can be customized using the
+`--override` and `--preserve` options.
 
 ```shell
-erdiagram-cli --create-config [-c CONFIG_FILE]
+erdiagram create-config [-c <configFile>]
 ```
 
-## Supported output formats
-
-### Database
-
-| Dialect    | Output format value                    |
-|------------|----------------------------------------|
-| MySQL      | `mysql`                                |
-| Oracle     | `oracle`                               |
-| PostgreSQL | `postgresql` or `postgres`             |
-| SQLite     | `sqlite`                               |
-| SQL Server | `sqlserver`, `mssql`, or `mssqlserver` |
-
-### OOP classes / interfaces
-
-| Language   | Output format value  |
-|------------|----------------------|
-| Java       | `java`               |
-| TypeScript | `typescript` or `ts` |
-
-### Diagram
-
-| Diagram engine | Output format value |
-|----------------|---------------------|
-| Nomnoml        | `nomnoml`           |
-| PlantUML       | `plantuml`          |
+Options:
+* `--config`, `-c`: config file path (if not specified, uses `erdiagram.config.json` if exists).
+* `--overwrite`, `-w`: overwrite existing config file without asking.
+* `--preserve`, `-p`: preserve existing config file without asking.

@@ -13,11 +13,9 @@ type RecursivePartial<T> = {
 					T[P];
 };
 
-const DEFAULT_CONFIG_FILE_PATH = 'erdiagram-cli.json';
+const DEFAULT_CONFIG_FILE_PATH = 'erdiagram.config.json';
 
-const rl = readline.createInterface(process.stdin, process.stdout);
-
-export default class ConfigFileManager {
+export default class ConfigFileReader {
 
 	public parseConfigFile(configFilePath?: string): ERDiagramCliConfig {
 
@@ -39,7 +37,7 @@ export default class ConfigFileManager {
 		const normalizedConfigFilePath = path.normalize(configFilePath ?? DEFAULT_CONFIG_FILE_PATH);
 
 		if (!fs.existsSync(normalizedConfigFilePath)) {
-			throw new Error(`Config file ${normalizedConfigFilePath} doesn't exists`);
+			throw new Error(`Config file '${normalizedConfigFilePath}' doesn't exists`);
 		}
 
 		const configFileContents = fs.readFileSync(normalizedConfigFilePath).toString();
@@ -47,41 +45,9 @@ export default class ConfigFileManager {
 		try {
 			return JSON.parse(configFileContents);
 		} catch (e) {
-			throw new Error(`Config file ${normalizedConfigFilePath} is not a valid JSON file`);
+			throw new Error(`Config file '${normalizedConfigFilePath}' is not a valid JSON file`);
 		}
 
-	}
-
-	public async createConfigFile(configFilePath?: string) {
-
-		const normalizedConfigFilePath = path.normalize(configFilePath ?? DEFAULT_CONFIG_FILE_PATH);
-
-		if(fs.existsSync(normalizedConfigFilePath) && !await this.confirmFileOverwrite(normalizedConfigFilePath)) {
-			process.stdout.write('Operation cancelled by the user.\n');
-			return;
-		}
-
-		const defaultSerializableConfig = this.getDefaultSerializedConfig();
-
-		const jsonConfig = JSON.stringify(defaultSerializableConfig, undefined, 2);
-
-		fs.writeFileSync(normalizedConfigFilePath, jsonConfig);
-		process.stdout.write(`Config file ${normalizedConfigFilePath} sucessfully generated.\n`);
-
-	}
-
-	private confirmFileOverwrite(filePath: string): Promise<boolean> {
-		return new Promise(resolve => {
-
-			const questionMessage = `File ${filePath} already exists. Do you like to overwrite it? (y/N) `;
-
-			rl.question(questionMessage, answer => {
-				const processedAnswer = answer.trim().toLowerCase();
-				const confirmed = ['y', 'yes'].includes(processedAnswer);
-				resolve(confirmed);
-			});
-
-		})
 	}
 
 	private getDefaultSerializedConfig() {
@@ -91,4 +57,4 @@ export default class ConfigFileManager {
 
 }
 
-export const configFileManager = new ConfigFileManager();
+export const configFileReader = new ConfigFileReader();

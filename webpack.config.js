@@ -51,7 +51,8 @@ module.exports = [
         },
         plugins: [
             new webpack.DefinePlugin({
-                APP_VERSION: JSON.stringify(`ERDiagram CLI v${packageJson.version}`)
+                APP_VERSION: JSON.stringify(`ERDiagram CLI v${packageJson.version}`),
+                ERDIAGRAM_CLI_COMMAND: JSON.stringify(Object.keys(packageJson.bin)[0])
             }),
             new webpack.BannerPlugin({banner: BUNDLE_HEADER, raw: true}),
             new ChmodPlugin(`${OUTPUT_DIR}/${OUTPUT_FILENAME}`, '755')
