@@ -4,6 +4,13 @@ This application is the CLI version of the [ERDiagram library](https://github.co
 
 Please, refer to the library docs for further information about _ERDiagram_ features.
 
+## Table of contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+    + [Generate command](#generate-command)
+    + [Create config command](#create-config-command)
+
 ## Installation
 
 ```shell
@@ -26,7 +33,7 @@ Options:
 
 ### Generate command
 
-The execute command generates the output code from an input entity-relationship diagram written using the _ERDiagram_
+The `generate` command generates the output code from an input entity-relationship diagram written using the _ERDiagram_
 language.
 
 Usage:
