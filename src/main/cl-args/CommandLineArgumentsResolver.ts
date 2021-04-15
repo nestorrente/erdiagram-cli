@@ -68,7 +68,7 @@ export class CommandLineArgumentsResolver {
 				})
 				.help()
 				.alias('help', 'h')
-				.version('1.0.0-beta.4')
+				.version(APP_VERSION)
 				.alias('version', 'v')
 				.usage(USAGE_MESSAGE)
 				.argv;
