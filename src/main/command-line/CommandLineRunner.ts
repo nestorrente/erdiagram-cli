@@ -64,7 +64,7 @@ export class CommandLineRunner {
 									.option('config', {
 										alias: 'c',
 										type: 'string',
-										description: 'Config file path (if not specified, uses \'erdiagram.config.json\' if exists)',
+										description: 'Config file path. If not specified, uses \'erdiagram.config.json\' (if exists)',
 										requiresArg: true
 									})
 									.option('format', {
@@ -77,7 +77,7 @@ export class CommandLineRunner {
 									.option('output', {
 										alias: 'o',
 										type: 'string',
-										description: 'Output file path (prints to standard output if not specified)',
+										description: 'Output file path. Prints to standard output if not specified',
 										requiresArg: true
 									})
 									.usage(GENERATE_COMMAND_USAGE_MESSAGE);
@@ -97,7 +97,7 @@ export class CommandLineRunner {
 									.option('config', {
 										alias: 'c',
 										type: 'string',
-										description: 'Config file path (if not specified, uses \'erdiagram.config.json\')',
+										description: 'Config file path. If not specified, uses \'erdiagram.config.json\'',
 										requiresArg: true
 									})
 									.option('overwrite', {
