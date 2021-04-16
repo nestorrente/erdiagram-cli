@@ -13,8 +13,16 @@ Please, refer to the library docs for further information about _ERDiagram_ feat
 
 ## Installation
 
+Global installation:
+
 ```shell
-npm install --global @nestorrente/erdiagram-cli
+npm install -g @nestorrente/erdiagram-cli
+```
+
+You can also install it for a single project:
+
+```shell
+npm install --save-dev @nestorrente/erdiagram-cli
 ```
 
 ## Usage
