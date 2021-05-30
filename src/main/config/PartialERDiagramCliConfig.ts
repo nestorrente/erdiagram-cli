@@ -30,7 +30,7 @@ type PartialERDiagramCliConfig = Partial<{
 			sqlserver: PartialSqlServerDialectConfig;
 		}>;
 		java: Partial<{
-			model: PartialJavaClassModelGeneratorConfig;
+			code: PartialJavaClassModelGeneratorConfig;
 			transformers: Partial<{
 				validation: PartialEnablable<PartialJavaxValidationTransformerConfig>;
 				jpa: PartialEnablable<PartialJpaTransformerConfig>;

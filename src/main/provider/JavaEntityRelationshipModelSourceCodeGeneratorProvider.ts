@@ -18,7 +18,7 @@ export default class JavaEntityRelationshipModelSourceCodeGeneratorProvider {
 	public getSourceCodeGenerator(): EntityRelationshipModelSourceCodeGenerator {
 		return JavaEntityRelationshipModelSourceCodeGenerator.builder()
 				.configureClassModel(this.config.classModel)
-				.configureJavaCode(this.config.output.java.model)
+				.configureJavaCode(this.config.output.java.code)
 				.addTransformers(...this.getTransformers())
 				.build();
 	}

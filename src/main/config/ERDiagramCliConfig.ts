@@ -29,7 +29,7 @@ export default interface ERDiagramCliConfig {
 			sqlserver: SqlServerDialectConfig;
 		};
 		java: {
-			model: JavaClassModelGeneratorConfig;
+			code: JavaClassModelGeneratorConfig;
 			transformers: {
 				validation: Enablable<JavaxValidationTransformerConfig>;
 				jpa: Enablable<JpaTransformerConfig>;

@@ -64,7 +64,7 @@ export class ERDiagramCliConfigManager
 					sqlserver: sqlServerDialectConfigManager.getDefaultConfig()
 				},
 				java: {
-					model: javaClassModelGeneratorConfigManager.getDefaultConfig(),
+					code: javaClassModelGeneratorConfigManager.getDefaultConfig(),
 					transformers: {
 						validation: {
 							enabled: false,
@@ -120,9 +120,9 @@ export class ERDiagramCliConfigManager
 					)
 				},
 				java: {
-					model: javaClassModelGeneratorConfigManager.mergeConfigs(
-							fullConfig.output.java.model,
-							partialConfig?.output?.java?.model
+					code: javaClassModelGeneratorConfigManager.mergeConfigs(
+							fullConfig.output.java.code,
+							partialConfig?.output?.java?.code
 					),
 					transformers: {
 						validation: {
@@ -167,7 +167,7 @@ export class ERDiagramCliConfigManager
 					sqlserver: useConfigManagerAsJsonAdapter(sqlServerDialectConfigManager)
 				}),
 				java: JsonAdapters.object<ERDiagramCliConfig['output']['java']>({
-					model: useConfigManagerAsJsonAdapter(javaClassModelGeneratorConfigManager),
+					code: useConfigManagerAsJsonAdapter(javaClassModelGeneratorConfigManager),
 					transformers: JsonAdapters.object<ERDiagramCliConfig['output']['java']['transformers']>({
 						validation: useConfigManagerAsJsonAdapterForEnablable(javaxValidationTransformerConfigManager),
 						jpa: useConfigManagerAsJsonAdapterForEnablable(jpaTransformerConfigManager)
