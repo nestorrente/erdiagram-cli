@@ -15,8 +15,8 @@ export default class SqlEntityRelationshipModelSourceCodeGeneratorProvider {
 
 	public getSourceCodeGenerator(outputFormat: SqlOutputFormat): SqlEntityRelationshipModelSourceCodeGenerator {
 		return SqlEntityRelationshipModelSourceCodeGenerator.builder()
-				.withDatabaseModelGeneratorConfig(this.config.databaseModel)
-				.withSqlDialect(this.sqlDialectProvider.getSqlDialect(outputFormat))
+				.configureDatabaseModel(this.config.databaseModel)
+				.useDialect(this.sqlDialectProvider.getSqlDialect(outputFormat))
 				.build();
 	}
 

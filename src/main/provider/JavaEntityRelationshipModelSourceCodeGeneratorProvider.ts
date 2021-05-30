@@ -17,15 +17,10 @@ export default class JavaEntityRelationshipModelSourceCodeGeneratorProvider {
 
 	public getSourceCodeGenerator(): EntityRelationshipModelSourceCodeGenerator {
 		return JavaEntityRelationshipModelSourceCodeGenerator.builder()
-				.withClassModelGeneratorConfig(this.config.classModel)
-				// FIXME we should rename this config, as the user of the library should know nothing about "JavaClassModelGenerator"
-				.withJavaClassModelGeneratorConfig(this.config.output.java.model)
-				.addJavaClassModelTransformers(...this.getTransformers())
+				.configureClassModel(this.config.classModel)
+				.configureJavaCode(this.config.output.java.model)
+				.addTransformers(...this.getTransformers())
 				.build();
-		// Maybe:
-		//     .builder().configureClassModel(...).configureJavaCodeGeneration(...).build()
-		// So the JavaClassModelGenerator will receive a JavaCodeGenerationConfig. Config interfaces should
-		// be defined taking into account the public API, not the internal components which use that configs.
 	}
 
 	private getTransformers(): JavaClassModelTransformer[] {
@@ -44,8 +39,8 @@ export default class JavaEntityRelationshipModelSourceCodeGeneratorProvider {
 
 		if (jpaTransformerConfig.enabled) {
 			const jpaTransformer = JpaTransformer.builder()
-					.withDatabaseModelGeneratorConfig(this.config.databaseModel)
-					.withConfig(jpaTransformerConfig)
+					.configureDatabaseModel(this.config.databaseModel)
+					.configureJpa(jpaTransformerConfig)
 					.build();
 			transformers.push(jpaTransformer);
 		}
