@@ -1,6 +1,6 @@
 {
 	"name": "@nestorrente/erdiagram-cli",
-	"version": "1.0.0-rc1",
+	"version": "1.0.0-rc2",
 	"description": "Entity-Relationship Diagram Code Generator CLI",
 	"scripts": {
 		"test": "jest --config jest.config.js",
@@ -69,7 +69,7 @@
 		"url": "https://github.com/nestorrente/erdiagram-cli.git"
 	},
 	"dependencies": {
-		"@nestorrente/erdiagram": "^1.0.0-rc1",
+		"@nestorrente/erdiagram": "file:nestorrente-erdiagram-1.0.0-rc2.tgz",
 		"lodash.merge": "^4.6.2"
 	}
 }

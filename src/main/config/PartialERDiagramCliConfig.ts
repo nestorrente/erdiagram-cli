@@ -1,30 +1,44 @@
 import {
-	ClassModelGeneratorConfig, DatabaseModelGeneratorConfig,
-	EntityRelationshipModelParserConfig,
-	JavaClassModelToCodeConverterConfig,
-	MysqlDialectConfig,
-	NomnomlEntityRelationshipModelToDiagramCodeConverterConfig,
-	OracleDialectConfig,
-	PostgresqlDialectConfig,
-	SqliteDialectConfig,
-	SqlServerDialectConfig,
-	TypeScriptClassModelToCodeConverterConfig
+	NomnomlEntityRelationshipModelSourceCodeGeneratorConfig,
+	PartialClassModelGeneratorConfig,
+	PartialDatabaseModelGeneratorConfig,
+	PartialEntityRelationshipModelParserConfig,
+	PartialJavaClassModelGeneratorConfig,
+	PartialJavaxValidationTransformerConfig,
+	PartialJpaTransformerConfig,
+	PartialMysqlDialectConfig,
+	PartialOracleDialectConfig,
+	PartialPostgresqlDialectConfig,
+	PartialSqliteDialectConfig,
+	PartialSqlServerDialectConfig,
+	PartialTypeScriptClassModelToCodeConverterConfig
 } from '@nestorrente/erdiagram';
+import {Enablable} from '@/config/ERDiagramCliConfig';
+
+export type PartialEnablable<T> = Partial<Enablable<T>>;
 
 type PartialERDiagramCliConfig = Partial<{
-	parser: Partial<EntityRelationshipModelParserConfig>;
-	classModel: Partial<ClassModelGeneratorConfig>;
-	databaseModel: Partial<DatabaseModelGeneratorConfig>;
-	output: {
-		mysql: Partial<MysqlDialectConfig>;
-		oracle: Partial<OracleDialectConfig>;
-		postgresql: Partial<PostgresqlDialectConfig>;
-		sqlite: Partial<SqliteDialectConfig>;
-		sqlserver: Partial<SqlServerDialectConfig>;
-		java: Partial<JavaClassModelToCodeConverterConfig>;
-		typescript: Partial<TypeScriptClassModelToCodeConverterConfig>;
-		nomnoml: Partial<NomnomlEntityRelationshipModelToDiagramCodeConverterConfig>;
-	}
+	parser: PartialEntityRelationshipModelParserConfig;
+	classModel: PartialClassModelGeneratorConfig;
+	databaseModel: PartialDatabaseModelGeneratorConfig;
+	output: Partial<{
+		sql: Partial<{
+			mysql: PartialMysqlDialectConfig;
+			oracle: PartialOracleDialectConfig;
+			postgresql: PartialPostgresqlDialectConfig;
+			sqlite: PartialSqliteDialectConfig;
+			sqlserver: PartialSqlServerDialectConfig;
+		}>;
+		java: Partial<{
+			model: PartialJavaClassModelGeneratorConfig;
+			transformers: Partial<{
+				validation: PartialEnablable<PartialJavaxValidationTransformerConfig>;
+				jpa: PartialEnablable<PartialJpaTransformerConfig>;
+			}>;
+		}>;
+		typescript: PartialTypeScriptClassModelToCodeConverterConfig;
+		nomnoml: NomnomlEntityRelationshipModelSourceCodeGeneratorConfig;
+	}>;
 }>;
 
 export default PartialERDiagramCliConfig;

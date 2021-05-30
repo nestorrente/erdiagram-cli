@@ -1,5 +1,5 @@
 import fs from 'fs';
-import OutputStrategy from '@/resolver/output-strategy/OutputStrategy';
+import OutputStrategy from '@/provider/output-strategy/OutputStrategy';
 
 export default class FileOutputStrategy implements OutputStrategy {
 
@@ -10,7 +10,7 @@ export default class FileOutputStrategy implements OutputStrategy {
 	}
 
 	write(outputCode: string): void {
-		fs.writeFileSync(this.outputFilePath, outputCode + '\n')
+		fs.writeFileSync(this.outputFilePath, outputCode + '\n');
 	}
 
 }

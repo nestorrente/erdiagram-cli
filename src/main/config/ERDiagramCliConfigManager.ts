@@ -1,9 +1,12 @@
 import {
 	AbstractComponentConfigManager,
-	classModelGeneratorConfigManager, ComponentConfigManager,
+	classModelGeneratorConfigManager,
+	ComponentConfigManager,
 	databaseModelGeneratorConfigManager,
 	entityRelationshipModelParserConfigManager,
-	javaClassModelToCodeConverterConfigManager,
+	javaClassModelGeneratorConfigManager,
+	javaxValidationTransformerConfigManager,
+	jpaTransformerConfigManager,
 	mysqlDialectConfigManager,
 	nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager,
 	oracleDialectConfigManager,
@@ -12,12 +15,40 @@ import {
 	sqlServerDialectConfigManager,
 	typescriptClassModelToCodeConverterConfigManager
 } from '@nestorrente/erdiagram';
-import ERDiagramCliConfig from '@/config/ERDiagramCliConfig';
-import ERDiagramCliSerializableConfig from '@/config/ERDiagramCliSerializableConfig';
+import ERDiagramCliConfig, {Enablable} from '@/config/ERDiagramCliConfig';
 import PartialERDiagramCliConfig from '@/config/PartialERDiagramCliConfig';
+import {JsonAdapter, JsonAdapters, JsonObject} from 'true-json';
+
+function useConfigManagerAsJsonAdapter<T>(configManager: ComponentConfigManager<T, any>): JsonAdapter<T> {
+	return JsonAdapters.custom({
+		adaptToJson(value) {
+			return configManager.convertToSerializableObject(value);
+		},
+		recoverFromJson(value) {
+			return configManager.convertFromSerializableObject(value);
+		}
+	});
+}
+
+function useConfigManagerAsJsonAdapterForEnablable<T>(configManager: ComponentConfigManager<T, any>): JsonAdapter<Enablable<T>, JsonObject> {
+	return JsonAdapters.custom({
+		adaptToJson(value) {
+			return {
+				enabled: value.enabled,
+				...configManager.convertToSerializableObject(value) as JsonObject
+			};
+		},
+		recoverFromJson(value) {
+			return {
+				enabled: value.enabled as boolean,
+				...configManager.convertFromSerializableObject(value)
+			};
+		}
+	});
+}
 
 export class ERDiagramCliConfigManager
-		extends AbstractComponentConfigManager<ERDiagramCliConfig, PartialERDiagramCliConfig, ERDiagramCliSerializableConfig> {
+		extends AbstractComponentConfigManager<ERDiagramCliConfig, PartialERDiagramCliConfig> {
 
 	getDefaultConfig(): ERDiagramCliConfig {
 		return {
@@ -25,12 +56,26 @@ export class ERDiagramCliConfigManager
 			databaseModel: databaseModelGeneratorConfigManager.getDefaultConfig(),
 			classModel: classModelGeneratorConfigManager.getDefaultConfig(),
 			output: {
-				mysql: mysqlDialectConfigManager.getDefaultConfig(),
-				oracle: oracleDialectConfigManager.getDefaultConfig(),
-				postgresql: postgresqlDialectConfigManager.getDefaultConfig(),
-				sqlite: sqliteDialectConfigManager.getDefaultConfig(),
-				sqlserver: sqlServerDialectConfigManager.getDefaultConfig(),
-				java: javaClassModelToCodeConverterConfigManager.getDefaultConfig(),
+				sql: {
+					mysql: mysqlDialectConfigManager.getDefaultConfig(),
+					oracle: oracleDialectConfigManager.getDefaultConfig(),
+					postgresql: postgresqlDialectConfigManager.getDefaultConfig(),
+					sqlite: sqliteDialectConfigManager.getDefaultConfig(),
+					sqlserver: sqlServerDialectConfigManager.getDefaultConfig()
+				},
+				java: {
+					model: javaClassModelGeneratorConfigManager.getDefaultConfig(),
+					transformers: {
+						validation: {
+							enabled: false,
+							...javaxValidationTransformerConfigManager.getDefaultConfig()
+						},
+						jpa: {
+							enabled: false,
+							...jpaTransformerConfigManager.getDefaultConfig()
+						}
+					}
+				},
 				typescript: typescriptClassModelToCodeConverterConfigManager.getDefaultConfig(),
 				nomnoml: nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager.getDefaultConfig(),
 			}
@@ -52,30 +97,50 @@ export class ERDiagramCliConfigManager
 					partialConfig?.classModel
 			),
 			output: {
-				mysql: mysqlDialectConfigManager.mergeConfigs(
-						fullConfig.output.mysql,
-						partialConfig?.output?.mysql
-				),
-				oracle: oracleDialectConfigManager.mergeConfigs(
-						fullConfig.output.oracle,
-						partialConfig?.output?.oracle
-				),
-				postgresql: postgresqlDialectConfigManager.mergeConfigs(
-						fullConfig.output.postgresql,
-						partialConfig?.output?.postgresql
-				),
-				sqlite: sqliteDialectConfigManager.mergeConfigs(
-						fullConfig.output.sqlite,
-						partialConfig?.output?.sqlite
-				),
-				sqlserver: sqlServerDialectConfigManager.mergeConfigs(
-						fullConfig.output.sqlserver,
-						partialConfig?.output?.sqlserver
-				),
-				java: javaClassModelToCodeConverterConfigManager.mergeConfigs(
-						fullConfig.output.java,
-						partialConfig?.output?.java
-				),
+				sql: {
+					mysql: mysqlDialectConfigManager.mergeConfigs(
+							fullConfig.output.sql.mysql,
+							partialConfig?.output?.sql?.mysql
+					),
+					oracle: oracleDialectConfigManager.mergeConfigs(
+							fullConfig.output.sql.oracle,
+							partialConfig?.output?.sql?.oracle
+					),
+					postgresql: postgresqlDialectConfigManager.mergeConfigs(
+							fullConfig.output.sql.postgresql,
+							partialConfig?.output?.sql?.postgresql
+					),
+					sqlite: sqliteDialectConfigManager.mergeConfigs(
+							fullConfig.output.sql.sqlite,
+							partialConfig?.output?.sql?.sqlite
+					),
+					sqlserver: sqlServerDialectConfigManager.mergeConfigs(
+							fullConfig.output.sql.sqlserver,
+							partialConfig?.output?.sql?.sqlserver
+					)
+				},
+				java: {
+					model: javaClassModelGeneratorConfigManager.mergeConfigs(
+							fullConfig.output.java.model,
+							partialConfig?.output?.java?.model
+					),
+					transformers: {
+						validation: {
+							enabled: partialConfig?.output?.java?.transformers?.validation?.enabled ?? fullConfig.output.java.transformers.validation.enabled,
+							...javaxValidationTransformerConfigManager.mergeConfigs(
+									fullConfig.output.java.transformers.validation,
+									partialConfig?.output?.java?.transformers?.validation
+							)
+						},
+						jpa: {
+							enabled: partialConfig?.output?.java?.transformers?.jpa?.enabled ?? fullConfig.output.java.transformers.jpa.enabled,
+							...jpaTransformerConfigManager.mergeConfigs(
+									fullConfig.output.java.transformers.jpa,
+									partialConfig?.output?.java?.transformers?.jpa
+							)
+						}
+					}
+				},
 				typescript: typescriptClassModelToCodeConverterConfigManager.mergeConfigs(
 						fullConfig.output.typescript,
 						partialConfig?.output?.typescript
@@ -88,53 +153,30 @@ export class ERDiagramCliConfigManager
 		};
 	}
 
-	convertToSerializableObject(fullConfig: ERDiagramCliConfig): ERDiagramCliSerializableConfig {
-		return {
-			parser: entityRelationshipModelParserConfigManager.convertToSerializableObject(fullConfig.parser),
-			databaseModel: databaseModelGeneratorConfigManager.convertToSerializableObject(fullConfig.databaseModel),
-			classModel: classModelGeneratorConfigManager.convertToSerializableObject(fullConfig.classModel),
-			output: {
-				mysql: mysqlDialectConfigManager.convertToSerializableObject(fullConfig.output.mysql),
-				oracle: oracleDialectConfigManager.convertToSerializableObject(fullConfig.output.oracle),
-				postgresql: postgresqlDialectConfigManager.convertToSerializableObject(fullConfig.output.postgresql),
-				sqlite: sqliteDialectConfigManager.convertToSerializableObject(fullConfig.output.sqlite),
-				sqlserver: sqlServerDialectConfigManager.convertToSerializableObject(fullConfig.output.sqlserver),
-				java: javaClassModelToCodeConverterConfigManager.convertToSerializableObject(fullConfig.output.java),
-				typescript: typescriptClassModelToCodeConverterConfigManager.convertToSerializableObject(fullConfig.output.typescript),
-				nomnoml: nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager.convertToSerializableObject(fullConfig.output.nomnoml)
-			}
-		};
-	}
-
-	convertFromSerializableObject(serializableConfig: ERDiagramCliSerializableConfig): ERDiagramCliConfig {
-		return {
-			parser: this.processSerializableObject(entityRelationshipModelParserConfigManager, serializableConfig?.parser),
-			databaseModel: this.processSerializableObject(databaseModelGeneratorConfigManager, serializableConfig?.databaseModel),
-			classModel: this.processSerializableObject(classModelGeneratorConfigManager, serializableConfig?.classModel),
-			output: {
-				mysql: this.processSerializableObject(mysqlDialectConfigManager, serializableConfig?.output?.mysql),
-				oracle: this.processSerializableObject(oracleDialectConfigManager, serializableConfig?.output?.oracle),
-				postgresql: this.processSerializableObject(postgresqlDialectConfigManager, serializableConfig?.output?.postgresql),
-				sqlite: this.processSerializableObject(sqliteDialectConfigManager, serializableConfig?.output?.sqlite),
-				sqlserver: this.processSerializableObject(sqlServerDialectConfigManager, serializableConfig?.output?.sqlserver),
-				java: this.processSerializableObject(javaClassModelToCodeConverterConfigManager, serializableConfig?.output?.java),
-				typescript: this.processSerializableObject(typescriptClassModelToCodeConverterConfigManager, serializableConfig?.output?.typescript),
-				nomnoml: this.processSerializableObject(nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager, serializableConfig?.output?.nomnoml)
-			}
-		};
-	}
-
-	private processSerializableObject<C, P, S>(configManager: ComponentConfigManager<C, P, S>, partialSerializableConfig?: Partial<S>): C {
-
-		const defaultSerializableConfig = configManager.convertToSerializableObject(configManager.getDefaultConfig());
-
-		const fullSerializableConfig: S = {
-			...defaultSerializableConfig,
-			...partialSerializableConfig
-		}
-
-		return configManager.convertFromSerializableObject(fullSerializableConfig);
-
+	protected getJsonAdapter(): JsonAdapter<ERDiagramCliConfig> {
+		return JsonAdapters.object<ERDiagramCliConfig>({
+			parser: useConfigManagerAsJsonAdapter(entityRelationshipModelParserConfigManager),
+			classModel: useConfigManagerAsJsonAdapter(classModelGeneratorConfigManager),
+			databaseModel: useConfigManagerAsJsonAdapter(databaseModelGeneratorConfigManager),
+			output: JsonAdapters.object<ERDiagramCliConfig['output']>({
+				sql: JsonAdapters.object<ERDiagramCliConfig['output']['sql']>({
+					mysql: useConfigManagerAsJsonAdapter(mysqlDialectConfigManager),
+					oracle: useConfigManagerAsJsonAdapter(oracleDialectConfigManager),
+					postgresql: useConfigManagerAsJsonAdapter(postgresqlDialectConfigManager),
+					sqlite: useConfigManagerAsJsonAdapter(sqliteDialectConfigManager),
+					sqlserver: useConfigManagerAsJsonAdapter(sqlServerDialectConfigManager)
+				}),
+				java: JsonAdapters.object<ERDiagramCliConfig['output']['java']>({
+					model: useConfigManagerAsJsonAdapter(javaClassModelGeneratorConfigManager),
+					transformers: JsonAdapters.object<ERDiagramCliConfig['output']['java']['transformers']>({
+						validation: useConfigManagerAsJsonAdapterForEnablable(javaxValidationTransformerConfigManager),
+						jpa: useConfigManagerAsJsonAdapterForEnablable(jpaTransformerConfigManager)
+					})
+				}),
+				typescript: useConfigManagerAsJsonAdapter(typescriptClassModelToCodeConverterConfigManager),
+				nomnoml: useConfigManagerAsJsonAdapter(nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager)
+			})
+		});
 	}
 
 }

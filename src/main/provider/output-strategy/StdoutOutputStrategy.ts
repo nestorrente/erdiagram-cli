@@ -1,5 +1,4 @@
-import fs from 'fs';
-import OutputStrategy from '@/resolver/output-strategy/OutputStrategy';
+import OutputStrategy from '@/provider/output-strategy/OutputStrategy';
 
 export default class StdoutOutputStrategy implements OutputStrategy {
 

@@ -1,10 +1,9 @@
-import ERDiagramCliSerializableConfig from '@/config/ERDiagramCliSerializableConfig';
 import fs from 'fs';
 import path from 'path';
-import readline from 'readline';
 import erdiagramCliConfigManager from '@/config/ERDiagramCliConfigManager';
 import ERDiagramCliConfig from '@/config/ERDiagramCliConfig';
-import merge from 'lodash.merge'
+import merge from 'lodash.merge';
+import {JsonValue} from 'true-json';
 
 type RecursivePartial<T> = {
 	[P in keyof T]?:
@@ -22,15 +21,15 @@ export default class ConfigFileReader {
 		const defaultSerializableConfig = this.getDefaultSerializedConfig();
 		const partialSerializableConfig = this.getSerializableConfigFromConfigFile(configFilePath);
 
-		const fullSerializableConfig: ERDiagramCliSerializableConfig = merge(defaultSerializableConfig, partialSerializableConfig);
+		const fullSerializableConfig = merge(defaultSerializableConfig, partialSerializableConfig);
 
 		return erdiagramCliConfigManager.convertFromSerializableObject(fullSerializableConfig);
 
 	}
 
-	private getSerializableConfigFromConfigFile(configFilePath?: string): RecursivePartial<ERDiagramCliSerializableConfig> | undefined {
+	private getSerializableConfigFromConfigFile(configFilePath?: string): JsonValue {
 
-		if(!configFilePath && !fs.existsSync(DEFAULT_CONFIG_FILE_PATH)) {
+		if (!configFilePath && !fs.existsSync(DEFAULT_CONFIG_FILE_PATH)) {
 			return undefined;
 		}
 
@@ -50,7 +49,7 @@ export default class ConfigFileReader {
 
 	}
 
-	private getDefaultSerializedConfig() {
+	private getDefaultSerializedConfig(): JsonValue {
 		const defaultConfig = erdiagramCliConfigManager.getDefaultConfig();
 		return erdiagramCliConfigManager.convertToSerializableObject(defaultConfig);
 	}
