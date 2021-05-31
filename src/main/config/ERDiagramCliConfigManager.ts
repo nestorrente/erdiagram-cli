@@ -19,34 +19,6 @@ import ERDiagramCliConfig, {Enablable} from '@/config/ERDiagramCliConfig';
 import PartialERDiagramCliConfig from '@/config/PartialERDiagramCliConfig';
 import {JsonAdapter, JsonAdapters, JsonObject} from 'true-json';
 
-function useConfigManagerAsJsonAdapter<T>(configManager: ComponentConfigManager<T, any>): JsonAdapter<T> {
-	return JsonAdapters.custom({
-		adaptToJson(value) {
-			return configManager.convertToSerializableObject(value);
-		},
-		recoverFromJson(value) {
-			return configManager.convertFromSerializableObject(value);
-		}
-	});
-}
-
-function useConfigManagerAsJsonAdapterForEnablable<T>(configManager: ComponentConfigManager<T, any>): JsonAdapter<Enablable<T>, JsonObject> {
-	return JsonAdapters.custom({
-		adaptToJson(value) {
-			return {
-				enabled: value.enabled,
-				...configManager.convertToSerializableObject(value) as JsonObject
-			};
-		},
-		recoverFromJson(value) {
-			return {
-				enabled: value.enabled as boolean,
-				...configManager.convertFromSerializableObject(value)
-			};
-		}
-	});
-}
-
 export class ERDiagramCliConfigManager
 		extends AbstractComponentConfigManager<ERDiagramCliConfig, PartialERDiagramCliConfig> {
 
@@ -179,6 +151,34 @@ export class ERDiagramCliConfigManager
 		});
 	}
 
+}
+
+function useConfigManagerAsJsonAdapter<T>(configManager: ComponentConfigManager<T, any>): JsonAdapter<T> {
+	return JsonAdapters.custom({
+		adaptToJson(value) {
+			return configManager.convertToSerializableObject(value);
+		},
+		recoverFromJson(value) {
+			return configManager.convertFromSerializableObject(value);
+		}
+	});
+}
+
+function useConfigManagerAsJsonAdapterForEnablable<T>(configManager: ComponentConfigManager<T, any>): JsonAdapter<Enablable<T>, JsonObject> {
+	return JsonAdapters.custom({
+		adaptToJson(value) {
+			return {
+				enabled: value.enabled,
+				...configManager.convertToSerializableObject(value) as JsonObject
+			};
+		},
+		recoverFromJson(value) {
+			return {
+				enabled: value.enabled as boolean,
+				...configManager.convertFromSerializableObject(value)
+			};
+		}
+	});
 }
 
 const erdiagramCliConfigManager = new ERDiagramCliConfigManager();
