@@ -1,7 +1,7 @@
 import fs from 'fs';
 import CommandRunner from '@/command-line/command/CommandRunner';
 import {EntityRelationshipModelParser} from '@nestorrente/erdiagram';
-import {EntityRelationshipModelSourceCodeGeneratorProvider} from '@/provider/EntityRelationshipModelSourceCodeGeneratorProvider';
+import {SourceCodeGeneratorProvider} from '@/provider/SourceCodeGeneratorProvider';
 import OutputStrategyResolver from '@/provider/output-strategy/OutputStrategyResolver';
 import {OutputFormat} from '@/output-formats';
 import {configFileReader} from '@/config/ConfigFileReader';
@@ -27,7 +27,7 @@ const generateCommandRunner: CommandRunner<GenerateCommandArgs> = {
 		const config = configFileReader.parseConfigFile(configFilePath);
 
 		const erModelParser = new EntityRelationshipModelParser(config.parser);
-		const erModelSourceCodeGeneratorProvider = new EntityRelationshipModelSourceCodeGeneratorProvider(config);
+		const erModelSourceCodeGeneratorProvider = new SourceCodeGeneratorProvider(config);
 		const erModelSourceCodeGenerator = erModelSourceCodeGeneratorProvider.getSourceCodeGenerator(outputFormat);
 		const outputStrategyResolver = new OutputStrategyResolver();
 

@@ -1,11 +1,11 @@
 import {
 	AbstractComponentConfigManager,
+	beanValidationTransformerConfigManager,
 	classModelGeneratorConfigManager,
 	ComponentConfigManager,
 	databaseModelGeneratorConfigManager,
 	entityRelationshipModelParserConfigManager,
 	javaClassModelGeneratorConfigManager,
-	javaxValidationTransformerConfigManager,
 	jpaTransformerConfigManager,
 	mysqlDialectConfigManager,
 	nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager,
@@ -40,7 +40,7 @@ export class ERDiagramCliConfigManager
 					transformers: {
 						validation: {
 							enabled: false,
-							...javaxValidationTransformerConfigManager.getDefaultConfig()
+							...beanValidationTransformerConfigManager.getDefaultConfig()
 						},
 						jpa: {
 							enabled: false,
@@ -99,7 +99,7 @@ export class ERDiagramCliConfigManager
 					transformers: {
 						validation: {
 							enabled: partialConfig?.output?.java?.transformers?.validation?.enabled ?? fullConfig.output.java.transformers.validation.enabled,
-							...javaxValidationTransformerConfigManager.mergeConfigs(
+							...beanValidationTransformerConfigManager.mergeConfigs(
 									fullConfig.output.java.transformers.validation,
 									partialConfig?.output?.java?.transformers?.validation
 							)
@@ -141,7 +141,7 @@ export class ERDiagramCliConfigManager
 				java: JsonAdapters.object<ERDiagramCliConfig['output']['java']>({
 					code: useConfigManagerAsJsonAdapter(javaClassModelGeneratorConfigManager),
 					transformers: JsonAdapters.object<ERDiagramCliConfig['output']['java']['transformers']>({
-						validation: useConfigManagerAsJsonAdapterForEnablable(javaxValidationTransformerConfigManager),
+						validation: useConfigManagerAsJsonAdapterForEnablable(beanValidationTransformerConfigManager),
 						jpa: useConfigManagerAsJsonAdapterForEnablable(jpaTransformerConfigManager)
 					})
 				}),

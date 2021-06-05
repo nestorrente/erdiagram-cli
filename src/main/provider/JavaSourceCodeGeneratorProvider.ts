@@ -1,13 +1,13 @@
 import ERDiagramCliConfig from '@/config/ERDiagramCliConfig';
 import {
-	EntityRelationshipModelSourceCodeGenerator,
+	BeanValidationTransformer,
 	JavaClassModelTransformer,
-	JavaEntityRelationshipModelSourceCodeGenerator,
-	JavaxValidationTransformer,
-	JpaTransformer
+	JavaSourceCodeGenerator,
+	JpaTransformer,
+	SourceCodeGenerator
 } from '@nestorrente/erdiagram';
 
-export default class JavaEntityRelationshipModelSourceCodeGeneratorProvider {
+export default class JavaSourceCodeGeneratorProvider {
 
 	constructor(
 			private readonly config: ERDiagramCliConfig
@@ -15,8 +15,8 @@ export default class JavaEntityRelationshipModelSourceCodeGeneratorProvider {
 
 	}
 
-	public getSourceCodeGenerator(): EntityRelationshipModelSourceCodeGenerator {
-		return JavaEntityRelationshipModelSourceCodeGenerator.builder()
+	public getSourceCodeGenerator(): SourceCodeGenerator {
+		return JavaSourceCodeGenerator.builder()
 				.configureClassModel(this.config.classModel)
 				.configureJavaCode(this.config.output.java.code)
 				.addTransformers(...this.getTransformers())
@@ -33,8 +33,8 @@ export default class JavaEntityRelationshipModelSourceCodeGeneratorProvider {
 		} = this.config.output.java.transformers;
 
 		if (validationTransformerConfig.enabled) {
-			const javaxValidationTransformer = new JavaxValidationTransformer(this.config.output.java.transformers.validation);
-			transformers.push(javaxValidationTransformer);
+			const beanValidationTransformer = new BeanValidationTransformer(this.config.output.java.transformers.validation);
+			transformers.push(beanValidationTransformer);
 		}
 
 		if (jpaTransformerConfig.enabled) {

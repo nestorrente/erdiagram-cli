@@ -1,10 +1,10 @@
 import {
-	NomnomlEntityRelationshipModelSourceCodeGeneratorConfig,
+	NomnomlSourceCodeGeneratorConfig,
 	PartialClassModelGeneratorConfig,
 	PartialDatabaseModelGeneratorConfig,
 	PartialEntityRelationshipModelParserConfig,
 	PartialJavaClassModelGeneratorConfig,
-	PartialJavaxValidationTransformerConfig,
+	PartialBeanValidationTransformerConfig,
 	PartialJpaTransformerConfig,
 	PartialMysqlDialectConfig,
 	PartialOracleDialectConfig,
@@ -32,12 +32,12 @@ type PartialERDiagramCliConfig = Partial<{
 		java: Partial<{
 			code: PartialJavaClassModelGeneratorConfig;
 			transformers: Partial<{
-				validation: PartialEnablable<PartialJavaxValidationTransformerConfig>;
+				validation: PartialEnablable<PartialBeanValidationTransformerConfig>;
 				jpa: PartialEnablable<PartialJpaTransformerConfig>;
 			}>;
 		}>;
 		typescript: PartialTypeScriptClassModelToCodeConverterConfig;
-		nomnoml: NomnomlEntityRelationshipModelSourceCodeGeneratorConfig;
+		nomnoml: NomnomlSourceCodeGeneratorConfig;
 	}>;
 }>;
 

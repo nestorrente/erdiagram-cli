@@ -1,12 +1,12 @@
 import {
+	BeanValidationTransformerConfig,
 	ClassModelGeneratorConfig,
 	DatabaseModelGeneratorConfig,
 	EntityRelationshipModelParserConfig,
 	JavaClassModelGeneratorConfig,
-	JavaxValidationTransformerConfig,
 	JpaTransformerConfig,
 	MysqlDialectConfig,
-	NomnomlEntityRelationshipModelSourceCodeGeneratorConfig,
+	NomnomlSourceCodeGeneratorConfig,
 	OracleDialectConfig,
 	PostgresqlDialectConfig,
 	SqliteDialectConfig,
@@ -31,11 +31,11 @@ export default interface ERDiagramCliConfig {
 		java: {
 			code: JavaClassModelGeneratorConfig;
 			transformers: {
-				validation: Enablable<JavaxValidationTransformerConfig>;
+				validation: Enablable<BeanValidationTransformerConfig>;
 				jpa: Enablable<JpaTransformerConfig>;
 			};
 		};
 		typescript: TypeScriptClassModelToCodeConverterConfig;
-		nomnoml: NomnomlEntityRelationshipModelSourceCodeGeneratorConfig;
+		nomnoml: NomnomlSourceCodeGeneratorConfig;
 	};
 }
