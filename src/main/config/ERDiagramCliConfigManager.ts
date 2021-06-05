@@ -1,32 +1,32 @@
 import {
-	AbstractComponentConfigManager,
-	beanValidationTransformerConfigManager,
-	classModelGeneratorConfigManager,
-	ComponentConfigManager,
-	databaseModelGeneratorConfigManager,
+	AbstractConfigManager,
+	beanValidationConfigManager,
+	classModelConfigManager,
+	ConfigManager,
+	databaseModelConfigManager,
 	entityRelationshipModelParserConfigManager,
-	javaClassModelGeneratorConfigManager,
-	jpaTransformerConfigManager,
+	javaClassModelConfigManager,
+	jpaConfigManager,
 	mysqlDialectConfigManager,
-	nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager,
+	nomnomlConfigManager,
 	oracleDialectConfigManager,
 	postgresqlDialectConfigManager,
 	sqliteDialectConfigManager,
 	sqlServerDialectConfigManager,
-	typescriptClassModelToCodeConverterConfigManager
+	typescriptConfigManager
 } from '@nestorrente/erdiagram';
 import ERDiagramCliConfig, {Enablable} from '@/config/ERDiagramCliConfig';
 import PartialERDiagramCliConfig from '@/config/PartialERDiagramCliConfig';
 import {JsonAdapter, JsonAdapters, JsonObject} from 'true-json';
 
 export class ERDiagramCliConfigManager
-		extends AbstractComponentConfigManager<ERDiagramCliConfig, PartialERDiagramCliConfig> {
+		extends AbstractConfigManager<ERDiagramCliConfig, PartialERDiagramCliConfig> {
 
 	getDefaultConfig(): ERDiagramCliConfig {
 		return {
 			parser: entityRelationshipModelParserConfigManager.getDefaultConfig(),
-			databaseModel: databaseModelGeneratorConfigManager.getDefaultConfig(),
-			classModel: classModelGeneratorConfigManager.getDefaultConfig(),
+			databaseModel: databaseModelConfigManager.getDefaultConfig(),
+			classModel: classModelConfigManager.getDefaultConfig(),
 			output: {
 				sql: {
 					mysql: mysqlDialectConfigManager.getDefaultConfig(),
@@ -36,20 +36,20 @@ export class ERDiagramCliConfigManager
 					sqlserver: sqlServerDialectConfigManager.getDefaultConfig()
 				},
 				java: {
-					code: javaClassModelGeneratorConfigManager.getDefaultConfig(),
+					code: javaClassModelConfigManager.getDefaultConfig(),
 					transformers: {
 						validation: {
 							enabled: false,
-							...beanValidationTransformerConfigManager.getDefaultConfig()
+							...beanValidationConfigManager.getDefaultConfig()
 						},
 						jpa: {
 							enabled: false,
-							...jpaTransformerConfigManager.getDefaultConfig()
+							...jpaConfigManager.getDefaultConfig()
 						}
 					}
 				},
-				typescript: typescriptClassModelToCodeConverterConfigManager.getDefaultConfig(),
-				nomnoml: nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager.getDefaultConfig(),
+				typescript: typescriptConfigManager.getDefaultConfig(),
+				nomnoml: nomnomlConfigManager.getDefaultConfig(),
 			}
 		};
 	}
@@ -60,11 +60,11 @@ export class ERDiagramCliConfigManager
 					fullConfig.parser,
 					partialConfig?.parser
 			),
-			databaseModel: databaseModelGeneratorConfigManager.mergeConfigs(
+			databaseModel: databaseModelConfigManager.mergeConfigs(
 					fullConfig.databaseModel,
 					partialConfig?.databaseModel
 			),
-			classModel: classModelGeneratorConfigManager.mergeConfigs(
+			classModel: classModelConfigManager.mergeConfigs(
 					fullConfig.classModel,
 					partialConfig?.classModel
 			),
@@ -92,32 +92,32 @@ export class ERDiagramCliConfigManager
 					)
 				},
 				java: {
-					code: javaClassModelGeneratorConfigManager.mergeConfigs(
+					code: javaClassModelConfigManager.mergeConfigs(
 							fullConfig.output.java.code,
 							partialConfig?.output?.java?.code
 					),
 					transformers: {
 						validation: {
 							enabled: partialConfig?.output?.java?.transformers?.validation?.enabled ?? fullConfig.output.java.transformers.validation.enabled,
-							...beanValidationTransformerConfigManager.mergeConfigs(
+							...beanValidationConfigManager.mergeConfigs(
 									fullConfig.output.java.transformers.validation,
 									partialConfig?.output?.java?.transformers?.validation
 							)
 						},
 						jpa: {
 							enabled: partialConfig?.output?.java?.transformers?.jpa?.enabled ?? fullConfig.output.java.transformers.jpa.enabled,
-							...jpaTransformerConfigManager.mergeConfigs(
+							...jpaConfigManager.mergeConfigs(
 									fullConfig.output.java.transformers.jpa,
 									partialConfig?.output?.java?.transformers?.jpa
 							)
 						}
 					}
 				},
-				typescript: typescriptClassModelToCodeConverterConfigManager.mergeConfigs(
+				typescript: typescriptConfigManager.mergeConfigs(
 						fullConfig.output.typescript,
 						partialConfig?.output?.typescript
 				),
-				nomnoml: nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager.mergeConfigs(
+				nomnoml: nomnomlConfigManager.mergeConfigs(
 						fullConfig.output.nomnoml,
 						partialConfig?.output?.nomnoml
 				),
@@ -128,8 +128,8 @@ export class ERDiagramCliConfigManager
 	protected getJsonAdapter(): JsonAdapter<ERDiagramCliConfig> {
 		return JsonAdapters.object<ERDiagramCliConfig>({
 			parser: useConfigManagerAsJsonAdapter(entityRelationshipModelParserConfigManager),
-			classModel: useConfigManagerAsJsonAdapter(classModelGeneratorConfigManager),
-			databaseModel: useConfigManagerAsJsonAdapter(databaseModelGeneratorConfigManager),
+			classModel: useConfigManagerAsJsonAdapter(classModelConfigManager),
+			databaseModel: useConfigManagerAsJsonAdapter(databaseModelConfigManager),
 			output: JsonAdapters.object<ERDiagramCliConfig['output']>({
 				sql: JsonAdapters.object<ERDiagramCliConfig['output']['sql']>({
 					mysql: useConfigManagerAsJsonAdapter(mysqlDialectConfigManager),
@@ -139,21 +139,21 @@ export class ERDiagramCliConfigManager
 					sqlserver: useConfigManagerAsJsonAdapter(sqlServerDialectConfigManager)
 				}),
 				java: JsonAdapters.object<ERDiagramCliConfig['output']['java']>({
-					code: useConfigManagerAsJsonAdapter(javaClassModelGeneratorConfigManager),
+					code: useConfigManagerAsJsonAdapter(javaClassModelConfigManager),
 					transformers: JsonAdapters.object<ERDiagramCliConfig['output']['java']['transformers']>({
-						validation: useConfigManagerAsJsonAdapterForEnablable(beanValidationTransformerConfigManager),
-						jpa: useConfigManagerAsJsonAdapterForEnablable(jpaTransformerConfigManager)
+						validation: useConfigManagerAsJsonAdapterForEnablable(beanValidationConfigManager),
+						jpa: useConfigManagerAsJsonAdapterForEnablable(jpaConfigManager)
 					})
 				}),
-				typescript: useConfigManagerAsJsonAdapter(typescriptClassModelToCodeConverterConfigManager),
-				nomnoml: useConfigManagerAsJsonAdapter(nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager)
+				typescript: useConfigManagerAsJsonAdapter(typescriptConfigManager),
+				nomnoml: useConfigManagerAsJsonAdapter(nomnomlConfigManager)
 			})
 		});
 	}
 
 }
 
-function useConfigManagerAsJsonAdapter<T>(configManager: ComponentConfigManager<T, any>): JsonAdapter<T> {
+function useConfigManagerAsJsonAdapter<T>(configManager: ConfigManager<T, any>): JsonAdapter<T> {
 	return JsonAdapters.custom({
 		adaptToJson(value) {
 			return configManager.convertToSerializableObject(value);
@@ -164,7 +164,7 @@ function useConfigManagerAsJsonAdapter<T>(configManager: ComponentConfigManager<
 	});
 }
 
-function useConfigManagerAsJsonAdapterForEnablable<T>(configManager: ComponentConfigManager<T, any>): JsonAdapter<Enablable<T>, JsonObject> {
+function useConfigManagerAsJsonAdapterForEnablable<T>(configManager: ConfigManager<T, any>): JsonAdapter<Enablable<T>, JsonObject> {
 	return JsonAdapters.custom({
 		adaptToJson(value) {
 			return {

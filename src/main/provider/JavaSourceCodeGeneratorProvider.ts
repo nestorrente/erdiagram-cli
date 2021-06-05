@@ -18,7 +18,7 @@ export default class JavaSourceCodeGeneratorProvider {
 	public getSourceCodeGenerator(): SourceCodeGenerator {
 		return JavaSourceCodeGenerator.builder()
 				.configureClassModel(this.config.classModel)
-				.configureJavaCode(this.config.output.java.code)
+				.configureJavaClassModel(this.config.output.java.code)
 				.addTransformers(...this.getTransformers())
 				.build();
 	}

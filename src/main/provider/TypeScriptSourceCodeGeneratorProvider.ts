@@ -1,8 +1,5 @@
 import ERDiagramCliConfig from '@/config/ERDiagramCliConfig';
-import {
-	SourceCodeGenerator,
-	TypeScriptSourceCodeGenerator
-} from '@nestorrente/erdiagram';
+import {SourceCodeGenerator, TypeScriptSourceCodeGenerator} from '@nestorrente/erdiagram';
 
 export default class JavaSourceCodeGeneratorProvider {
 
@@ -15,7 +12,7 @@ export default class JavaSourceCodeGeneratorProvider {
 	public getSourceCodeGenerator(): SourceCodeGenerator {
 		return TypeScriptSourceCodeGenerator.builder()
 				.configureClassModel(this.config.classModel)
-				.configureTypeScriptCode(this.config.output.typescript)
+				.configureTypeScript(this.config.output.typescript)
 				.build();
 	}
 

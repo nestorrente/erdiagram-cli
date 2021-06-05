@@ -1,25 +1,25 @@
 import {
-	BeanValidationTransformerConfig,
-	ClassModelGeneratorConfig,
-	DatabaseModelGeneratorConfig,
+	BeanValidationConfig,
+	ClassModelConfig,
+	DatabaseModelConfig,
 	EntityRelationshipModelParserConfig,
-	JavaClassModelGeneratorConfig,
-	JpaTransformerConfig,
+	JavaClassModelConfig,
+	JpaConfig,
 	MysqlDialectConfig,
-	NomnomlSourceCodeGeneratorConfig,
+	NomnomlConfig,
 	OracleDialectConfig,
 	PostgresqlDialectConfig,
 	SqliteDialectConfig,
 	SqlServerDialectConfig,
-	TypeScriptClassModelToCodeConverterConfig
+	TypeScriptConfig
 } from '@nestorrente/erdiagram';
 
 export type Enablable<T> = T & { enabled: boolean };
 
 export default interface ERDiagramCliConfig {
 	parser: EntityRelationshipModelParserConfig;
-	classModel: ClassModelGeneratorConfig;
-	databaseModel: DatabaseModelGeneratorConfig;
+	classModel: ClassModelConfig;
+	databaseModel: DatabaseModelConfig;
 	output: {
 		sql: {
 			mysql: MysqlDialectConfig;
@@ -29,13 +29,13 @@ export default interface ERDiagramCliConfig {
 			sqlserver: SqlServerDialectConfig;
 		};
 		java: {
-			code: JavaClassModelGeneratorConfig;
+			code: JavaClassModelConfig;
 			transformers: {
-				validation: Enablable<BeanValidationTransformerConfig>;
-				jpa: Enablable<JpaTransformerConfig>;
+				validation: Enablable<BeanValidationConfig>;
+				jpa: Enablable<JpaConfig>;
 			};
 		};
-		typescript: TypeScriptClassModelToCodeConverterConfig;
-		nomnoml: NomnomlSourceCodeGeneratorConfig;
+		typescript: TypeScriptConfig;
+		nomnoml: NomnomlConfig;
 	};
 }

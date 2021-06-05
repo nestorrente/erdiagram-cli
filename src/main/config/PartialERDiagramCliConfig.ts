@@ -1,17 +1,17 @@
 import {
-	NomnomlSourceCodeGeneratorConfig,
-	PartialClassModelGeneratorConfig,
-	PartialDatabaseModelGeneratorConfig,
+	NomnomlConfig,
+	PartialBeanValidationConfig,
+	PartialClassModelConfig,
+	PartialDatabaseModelConfig,
 	PartialEntityRelationshipModelParserConfig,
-	PartialJavaClassModelGeneratorConfig,
-	PartialBeanValidationTransformerConfig,
-	PartialJpaTransformerConfig,
+	PartialJavaClassModelConfig,
+	PartialJpaConfig,
 	PartialMysqlDialectConfig,
 	PartialOracleDialectConfig,
 	PartialPostgresqlDialectConfig,
 	PartialSqliteDialectConfig,
 	PartialSqlServerDialectConfig,
-	PartialTypeScriptClassModelToCodeConverterConfig
+	PartialTypeScriptConfig
 } from '@nestorrente/erdiagram';
 import {Enablable} from '@/config/ERDiagramCliConfig';
 
@@ -19,8 +19,8 @@ export type PartialEnablable<T> = Partial<Enablable<T>>;
 
 type PartialERDiagramCliConfig = Partial<{
 	parser: PartialEntityRelationshipModelParserConfig;
-	classModel: PartialClassModelGeneratorConfig;
-	databaseModel: PartialDatabaseModelGeneratorConfig;
+	classModel: PartialClassModelConfig;
+	databaseModel: PartialDatabaseModelConfig;
 	output: Partial<{
 		sql: Partial<{
 			mysql: PartialMysqlDialectConfig;
@@ -30,14 +30,14 @@ type PartialERDiagramCliConfig = Partial<{
 			sqlserver: PartialSqlServerDialectConfig;
 		}>;
 		java: Partial<{
-			code: PartialJavaClassModelGeneratorConfig;
+			code: PartialJavaClassModelConfig;
 			transformers: Partial<{
-				validation: PartialEnablable<PartialBeanValidationTransformerConfig>;
-				jpa: PartialEnablable<PartialJpaTransformerConfig>;
+				validation: PartialEnablable<PartialBeanValidationConfig>;
+				jpa: PartialEnablable<PartialJpaConfig>;
 			}>;
 		}>;
-		typescript: PartialTypeScriptClassModelToCodeConverterConfig;
-		nomnoml: NomnomlSourceCodeGeneratorConfig;
+		typescript: PartialTypeScriptConfig;
+		nomnoml: NomnomlConfig;
 	}>;
 }>;
 
