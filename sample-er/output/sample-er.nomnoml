@@ -1,27 +1,12 @@
-[User|
-    username!: text(50)
-    name: text(50)
-    birthday?: date
-    avatar?: blob
-    active: bool
-]
+[User]
 
-[Country|
-    theCountryId: identity
-    code: text(5)
-    name: text(100)
-]
+[Country]
 
-[Permission|
-    code: text(30)
-    description: text(200)
-]
+[Permission]
 
 [Tree]
 
-[TreeNode|
-    value: int
-]
+[TreeNode]
 
 [User] *->1 [Country]
 

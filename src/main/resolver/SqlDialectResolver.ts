@@ -1,26 +1,15 @@
-import yargs from 'yargs';
-import fs from 'fs';
 import {
-	ClassModelGenerator,
-	DatabaseModelGenerator,
-	DatabaseModelToSqlCodeConverter,
-	EntityRelationshipModelParser,
-	EntityRelationshipModelToClassCodeConverter,
-	EntityRelationshipModelToCodeConverter,
-	EntityRelationshipModelToDatabaseCodeConverter,
-	JavaClassModelToCodeConverter,
-	MysqlDialect, NomnomlEntityRelationshipModelToDiagramCodeConverter,
-	OracleDialect, PlantUmlEntityRelationshipModelToDiagramCodeConverter,
+	MysqlDialect,
+	OracleDialect,
 	PostgresqlDialect,
 	SqlDialect,
 	SqliteDialect,
-	SqlServerDialect, TypeScriptClassModelToCodeConverter,
+	SqlServerDialect,
 } from '@nestorrente/erdiagram';
-import erdiagramCliConfigManager from '@/config/ERDiagramCliConfigManager';
 import {SqlOutputFormat} from '@/output-formats';
 import ERDiagramCliConfig from '@/config/ERDiagramCliConfig';
 
-export default class SqlDialectProvider {
+export default class SqlDialectResolver {
 
 	constructor(
 			private readonly config: ERDiagramCliConfig

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import CommandRunner from '@/command-line/command/CommandRunner';
 import {EntityRelationshipModelParser} from '@nestorrente/erdiagram';
-import {EntityRelationshipModelToCodeConverterProvider} from '@/resolver/EntityRelationshipModelToCodeConverterProvider';
+import {SourceCodeGeneratorProvider} from '@/resolver/SourceCodeGeneratorProvider';
 import OutputStrategyResolver from '@/resolver/output-strategy/OutputStrategyResolver';
 import {OutputFormat} from '@/output-formats';
 import {configFileReader} from '@/config/ConfigFileReader';
@@ -26,17 +26,18 @@ const generateCommandRunner: CommandRunner<GenerateCommandArgs> = {
 
 		const config = configFileReader.parseConfigFile(configFilePath);
 
-		const erModelParser = new EntityRelationshipModelParser(config.parser);
-		const erModelToCodeConverterProvider = new EntityRelationshipModelToCodeConverterProvider(config);
-		const erModelToCodeConverter = erModelToCodeConverterProvider.getERModelToCodeConverter(outputFormat);
-		const outputStrategyResolver = new OutputStrategyResolver();
-
 		const inputCode = fs.readFileSync(inputFilePath).toString();
-		const model = erModelParser.parseModel(inputCode);
-		const outputCode = erModelToCodeConverter.convertToCode(model);
 
-		const outputStrategy = outputStrategyResolver.resolveOutputStrategy(outputFilePath);
-		outputStrategy.write(outputCode);
+		const model = new EntityRelationshipModelParser(config.parser)
+            .parseModel(inputCode);
+
+		const outputCode = new SourceCodeGeneratorProvider(config)
+            .getSourceCodeGenerator(outputFormat)
+            .generateSourceCode(model);
+
+		new OutputStrategyResolver()
+			.resolveOutputStrategy(outputFilePath)
+            .write(outputCode);
 
 	}
 

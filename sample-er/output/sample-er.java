@@ -1,20 +1,33 @@
 /* ========== User class ========== */
 
+import java.nio.ByteBuffer;
 import java.time.LocalDate;
 import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class User {
 
     private Long id;
+    @NotBlank
+    @Size(max = 50)
     private String username;
+    @NotBlank
+    @Size(max = 50)
     private String name;
     private LocalDate birthday;
-    private byte[] avatar;
+    private ByteBuffer avatar;
+    @NotNull
     private Boolean active;
+    @NotNull
     private Country country;
     private Country alternativeCountry;
+    @NotNull
     private List<Permission> permissions;
+    @NotNull
     private List<User> follows;
+    @NotNull
     private List<User> followers;
 
     public Long getId() {
@@ -49,11 +62,11 @@ public class User {
         this.birthday = birthday;
     }
 
-    public byte[] getAvatar() {
+    public ByteBuffer getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(ByteBuffer avatar) {
         this.avatar = avatar;
     }
 
@@ -109,10 +122,17 @@ public class User {
 
 /* ========== Country class ========== */
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class Country {
 
     private Long theCountryId;
+    @NotBlank
+    @Size(max = 5)
     private String code;
+    @NotBlank
+    @Size(max = 100)
     private String name;
 
     public Long getTheCountryId() {
@@ -144,12 +164,20 @@ public class Country {
 /* ========== Permission class ========== */
 
 import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Permission {
 
     private Long id;
+    @NotBlank
+    @Size(max = 30)
     private String code;
+    @NotBlank
+    @Size(max = 200)
     private String description;
+    @NotNull
     private List<User> users;
 
     public Long getId() {
@@ -188,9 +216,12 @@ public class Permission {
 
 /* ========== Tree class ========== */
 
+import javax.validation.constraints.NotNull;
+
 public class Tree {
 
     private Long id;
+    @NotNull
     private TreeNode headNode;
 
     public Long getId() {
@@ -214,12 +245,15 @@ public class Tree {
 /* ========== TreeNode class ========== */
 
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 public class TreeNode {
 
     private Long id;
+    @NotNull
     private Integer value;
     private TreeNode parent;
+    @NotNull
     private List<TreeNode> children;
 
     public Long getId() {

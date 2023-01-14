@@ -1,38 +1,56 @@
 import {
-	AbstractComponentConfigManager,
-	classModelGeneratorConfigManager, ComponentConfigManager,
-	databaseModelGeneratorConfigManager,
+	AbstractConfigManager, beanValidationConfigManager,
+	classModelConfigManager,
+	ConfigManager,
+	databaseModelConfigManager,
 	entityRelationshipModelParserConfigManager,
-	javaClassModelToCodeConverterConfigManager,
+	javaClassModelConfigManager, jpaConfigManager,
 	mysqlDialectConfigManager,
-	nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager,
-	oracleDialectConfigManager,
+	nomnomlConfigManager,
+	oracleDialectConfigManager, plantUmlConfigManager,
 	postgresqlDialectConfigManager,
 	sqliteDialectConfigManager,
 	sqlServerDialectConfigManager,
-	typescriptClassModelToCodeConverterConfigManager
+	typescriptConfigManager
 } from '@nestorrente/erdiagram';
+import {
+	JsonAdapter,
+	JsonAdapters,
+	JsonObject
+} from 'true-json';
 import ERDiagramCliConfig from '@/config/ERDiagramCliConfig';
-import ERDiagramCliSerializableConfig from '@/config/ERDiagramCliSerializableConfig';
 import PartialERDiagramCliConfig from '@/config/PartialERDiagramCliConfig';
 
 export class ERDiagramCliConfigManager
-		extends AbstractComponentConfigManager<ERDiagramCliConfig, PartialERDiagramCliConfig, ERDiagramCliSerializableConfig> {
+		extends AbstractConfigManager<ERDiagramCliConfig, PartialERDiagramCliConfig> {
 
 	getDefaultConfig(): ERDiagramCliConfig {
 		return {
 			parser: entityRelationshipModelParserConfigManager.getDefaultConfig(),
-			databaseModel: databaseModelGeneratorConfigManager.getDefaultConfig(),
-			classModel: classModelGeneratorConfigManager.getDefaultConfig(),
+			databaseModel: databaseModelConfigManager.getDefaultConfig(),
+			classModel: classModelConfigManager.getDefaultConfig(),
 			output: {
 				mysql: mysqlDialectConfigManager.getDefaultConfig(),
 				oracle: oracleDialectConfigManager.getDefaultConfig(),
 				postgresql: postgresqlDialectConfigManager.getDefaultConfig(),
 				sqlite: sqliteDialectConfigManager.getDefaultConfig(),
 				sqlserver: sqlServerDialectConfigManager.getDefaultConfig(),
-				java: javaClassModelToCodeConverterConfigManager.getDefaultConfig(),
-				typescript: typescriptClassModelToCodeConverterConfigManager.getDefaultConfig(),
-				nomnoml: nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager.getDefaultConfig(),
+				java: {
+					classModel: javaClassModelConfigManager.getDefaultConfig(),
+					transformers: {
+						validation: {
+							enabled: true,
+							config: beanValidationConfigManager.getDefaultConfig()
+						},
+						jpa: {
+							enabled: true,
+							config: jpaConfigManager.getDefaultConfig()
+						}
+					}
+				},
+				typescript: typescriptConfigManager.getDefaultConfig(),
+				nomnoml: nomnomlConfigManager.getDefaultConfig(),
+				plantuml: plantUmlConfigManager.getDefaultConfig(),
 			}
 		};
 	}
@@ -43,11 +61,11 @@ export class ERDiagramCliConfigManager
 					fullConfig.parser,
 					partialConfig?.parser
 			),
-			databaseModel: databaseModelGeneratorConfigManager.mergeConfigs(
+			databaseModel: databaseModelConfigManager.mergeConfigs(
 					fullConfig.databaseModel,
 					partialConfig?.databaseModel
 			),
-			classModel: classModelGeneratorConfigManager.mergeConfigs(
+			classModel: classModelConfigManager.mergeConfigs(
 					fullConfig.classModel,
 					partialConfig?.classModel
 			),
@@ -72,71 +90,90 @@ export class ERDiagramCliConfigManager
 						fullConfig.output.sqlserver,
 						partialConfig?.output?.sqlserver
 				),
-				java: javaClassModelToCodeConverterConfigManager.mergeConfigs(
-						fullConfig.output.java,
-						partialConfig?.output?.java
-				),
-				typescript: typescriptClassModelToCodeConverterConfigManager.mergeConfigs(
+				java: {
+					classModel: javaClassModelConfigManager.mergeConfigs(
+						fullConfig.output.java.classModel,
+						partialConfig?.output?.java?.classModel
+					),
+					transformers: {
+						validation: {
+							enabled: partialConfig?.output?.java?.transformers?.validation?.enabled ?? fullConfig.output.java.transformers.validation.enabled,
+							config: beanValidationConfigManager.mergeConfigs(
+								fullConfig.output.java.transformers.validation.config,
+								partialConfig?.output?.java?.transformers?.validation?.config
+							)
+						},
+						jpa: {
+							enabled: partialConfig?.output?.java?.transformers?.jpa?.enabled ?? fullConfig.output.java.transformers.jpa.enabled,
+							config: jpaConfigManager.mergeConfigs(
+								fullConfig.output.java.transformers.jpa.config,
+								partialConfig?.output?.java?.transformers?.jpa?.config
+							)
+						}
+					}
+				},
+				typescript: typescriptConfigManager.mergeConfigs(
 						fullConfig.output.typescript,
 						partialConfig?.output?.typescript
 				),
-				nomnoml: nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager.mergeConfigs(
+				nomnoml: nomnomlConfigManager.mergeConfigs(
 						fullConfig.output.nomnoml,
 						partialConfig?.output?.nomnoml
+				),
+				plantuml: plantUmlConfigManager.mergeConfigs(
+						fullConfig.output.plantuml,
+						partialConfig?.output?.plantuml
 				),
 			}
 		};
 	}
 
-	convertToSerializableObject(fullConfig: ERDiagramCliConfig): ERDiagramCliSerializableConfig {
-		return {
-			parser: entityRelationshipModelParserConfigManager.convertToSerializableObject(fullConfig.parser),
-			databaseModel: databaseModelGeneratorConfigManager.convertToSerializableObject(fullConfig.databaseModel),
-			classModel: classModelGeneratorConfigManager.convertToSerializableObject(fullConfig.classModel),
-			output: {
-				mysql: mysqlDialectConfigManager.convertToSerializableObject(fullConfig.output.mysql),
-				oracle: oracleDialectConfigManager.convertToSerializableObject(fullConfig.output.oracle),
-				postgresql: postgresqlDialectConfigManager.convertToSerializableObject(fullConfig.output.postgresql),
-				sqlite: sqliteDialectConfigManager.convertToSerializableObject(fullConfig.output.sqlite),
-				sqlserver: sqlServerDialectConfigManager.convertToSerializableObject(fullConfig.output.sqlserver),
-				java: javaClassModelToCodeConverterConfigManager.convertToSerializableObject(fullConfig.output.java),
-				typescript: typescriptClassModelToCodeConverterConfigManager.convertToSerializableObject(fullConfig.output.typescript),
-				nomnoml: nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager.convertToSerializableObject(fullConfig.output.nomnoml)
-			}
-		};
+	convertToSerializableObject(fullConfig: ERDiagramCliConfig): JsonObject {
+		return super.convertToSerializableObject(fullConfig) as JsonObject;
 	}
 
-	convertFromSerializableObject(serializableConfig: ERDiagramCliSerializableConfig): ERDiagramCliConfig {
-		return {
-			parser: this.processSerializableObject(entityRelationshipModelParserConfigManager, serializableConfig?.parser),
-			databaseModel: this.processSerializableObject(databaseModelGeneratorConfigManager, serializableConfig?.databaseModel),
-			classModel: this.processSerializableObject(classModelGeneratorConfigManager, serializableConfig?.classModel),
-			output: {
-				mysql: this.processSerializableObject(mysqlDialectConfigManager, serializableConfig?.output?.mysql),
-				oracle: this.processSerializableObject(oracleDialectConfigManager, serializableConfig?.output?.oracle),
-				postgresql: this.processSerializableObject(postgresqlDialectConfigManager, serializableConfig?.output?.postgresql),
-				sqlite: this.processSerializableObject(sqliteDialectConfigManager, serializableConfig?.output?.sqlite),
-				sqlserver: this.processSerializableObject(sqlServerDialectConfigManager, serializableConfig?.output?.sqlserver),
-				java: this.processSerializableObject(javaClassModelToCodeConverterConfigManager, serializableConfig?.output?.java),
-				typescript: this.processSerializableObject(typescriptClassModelToCodeConverterConfigManager, serializableConfig?.output?.typescript),
-				nomnoml: this.processSerializableObject(nomnomlEntityRelationshipModelToDiagramCodeConverterConfigManager, serializableConfig?.output?.nomnoml)
-			}
-		};
+	protected getJsonAdapter(): JsonAdapter<ERDiagramCliConfig> {
+		return JsonAdapters.object({
+			parser: adaptConfigManagerToJsonAdapter(entityRelationshipModelParserConfigManager),
+			databaseModel: adaptConfigManagerToJsonAdapter(databaseModelConfigManager),
+			classModel: adaptConfigManagerToJsonAdapter(classModelConfigManager),
+			output: JsonAdapters.object({
+				mysql: adaptConfigManagerToJsonAdapter(mysqlDialectConfigManager),
+				oracle: adaptConfigManagerToJsonAdapter(oracleDialectConfigManager),
+				postgresql: adaptConfigManagerToJsonAdapter(postgresqlDialectConfigManager),
+				sqlite: adaptConfigManagerToJsonAdapter(sqliteDialectConfigManager),
+				sqlserver: adaptConfigManagerToJsonAdapter(sqlServerDialectConfigManager),
+				java: JsonAdapters.object({
+					classModel: adaptConfigManagerToJsonAdapter(javaClassModelConfigManager),
+					transformers: JsonAdapters.object({
+						validation: JsonAdapters.object({
+							enabled: JsonAdapters.identity<boolean>(),
+							config: adaptConfigManagerToJsonAdapter(beanValidationConfigManager)
+						}),
+						jpa: JsonAdapters.object({
+							enabled: JsonAdapters.identity<boolean>(),
+							config: adaptConfigManagerToJsonAdapter(jpaConfigManager)
+						}),
+					})
+				}),
+				typescript: adaptConfigManagerToJsonAdapter(typescriptConfigManager),
+				nomnoml: adaptConfigManagerToJsonAdapter(nomnomlConfigManager),
+				plantuml: adaptConfigManagerToJsonAdapter(plantUmlConfigManager)
+			})
+		});
 	}
 
-	private processSerializableObject<C, P, S>(configManager: ComponentConfigManager<C, P, S>, partialSerializableConfig?: Partial<S>): C {
+}
 
-		const defaultSerializableConfig = configManager.convertToSerializableObject(configManager.getDefaultConfig());
-
-		const fullSerializableConfig: S = {
-			...defaultSerializableConfig,
-			...partialSerializableConfig
+function adaptConfigManagerToJsonAdapter<T>(configManager: ConfigManager<T, any>): JsonAdapter<T> {
+	return JsonAdapters.custom({
+		adaptToJson(value) {
+			return configManager.convertToSerializableObject(value);
+		},
+		recoverFromJson(value) {
+			return configManager.convertFromSerializableObject(value);
 		}
-
-		return configManager.convertFromSerializableObject(fullSerializableConfig);
-
-	}
-
+	});
 }
 
 const erdiagramCliConfigManager = new ERDiagramCliConfigManager();

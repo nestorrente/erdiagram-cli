@@ -4,5 +4,28 @@
   },
   "databaseModel": {
     "idNamingStrategy": "ENTITY_NAME_PREFIX"
+  },
+  "output": {
+    "java": {
+      "classModel": {
+        "typeBindings": {
+          "blob": "java.nio.ByteBuffer"
+        }
+      },
+      "transformers": {
+        "validation": {
+          "enabled": true,
+          "config": {
+            "notNullTextValidationStrategy": "not_blank"
+          }
+        },
+        "jpa": {
+          "enabled": false
+        }
+      }
+    },
+    "nomnoml": {
+      "diagramLevel": "conceptual"
+    }
   }
 }

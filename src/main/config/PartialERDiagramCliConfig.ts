@@ -1,30 +1,46 @@
 import {
-	ClassModelGeneratorConfig, DatabaseModelGeneratorConfig,
-	EntityRelationshipModelParserConfig,
-	JavaClassModelToCodeConverterConfig,
-	MysqlDialectConfig,
-	NomnomlEntityRelationshipModelToDiagramCodeConverterConfig,
-	OracleDialectConfig,
-	PostgresqlDialectConfig,
-	SqliteDialectConfig,
-	SqlServerDialectConfig,
-	TypeScriptClassModelToCodeConverterConfig
+	PartialBeanValidationConfig,
+	PartialClassModelConfig,
+	PartialDatabaseModelConfig,
+	PartialEntityRelationshipModelParserConfig,
+	PartialJavaClassModelConfig, PartialJpaConfig,
+	PartialMysqlDialectConfig,
+	PartialNomnomlConfig,
+	PartialOracleDialectConfig,
+	PartialPlantUmlConfig,
+	PartialPostgresqlDialectConfig,
+	PartialSqliteDialectConfig,
+	PartialSqlServerDialectConfig,
+	PartialTypeScriptConfig
 } from '@nestorrente/erdiagram';
 
-type PartialERDiagramCliConfig = Partial<{
-	parser: Partial<EntityRelationshipModelParserConfig>;
-	classModel: Partial<ClassModelGeneratorConfig>;
-	databaseModel: Partial<DatabaseModelGeneratorConfig>;
-	output: {
-		mysql: Partial<MysqlDialectConfig>;
-		oracle: Partial<OracleDialectConfig>;
-		postgresql: Partial<PostgresqlDialectConfig>;
-		sqlite: Partial<SqliteDialectConfig>;
-		sqlserver: Partial<SqlServerDialectConfig>;
-		java: Partial<JavaClassModelToCodeConverterConfig>;
-		typescript: Partial<TypeScriptClassModelToCodeConverterConfig>;
-		nomnoml: Partial<NomnomlEntityRelationshipModelToDiagramCodeConverterConfig>;
-	}
-}>;
+type PartialERDiagramCliConfig = {
+	parser?: PartialEntityRelationshipModelParserConfig;
+	classModel?: PartialClassModelConfig;
+	databaseModel?: PartialDatabaseModelConfig;
+	output?: {
+		mysql?: PartialMysqlDialectConfig;
+		oracle?: PartialOracleDialectConfig;
+		postgresql?: PartialPostgresqlDialectConfig;
+		sqlite?: PartialSqliteDialectConfig;
+		sqlserver?: PartialSqlServerDialectConfig;
+		java?: {
+			classModel?: PartialJavaClassModelConfig,
+			transformers?: {
+				validation?: {
+					enabled?: boolean;
+					config?: PartialBeanValidationConfig;
+				};
+				jpa?: {
+					enabled?: boolean;
+					config?: PartialJpaConfig;
+				};
+			};
+		};
+		typescript?: PartialTypeScriptConfig;
+		nomnoml?: PartialNomnomlConfig;
+		plantuml?: PartialPlantUmlConfig;
+	};
+};
 
 export default PartialERDiagramCliConfig;

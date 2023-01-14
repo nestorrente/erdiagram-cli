@@ -1,29 +1,44 @@
 import {
-	ClassModelGeneratorConfig,
-	DatabaseModelGeneratorConfig,
+	BeanValidationConfig,
+	ClassModelConfig,
+	DatabaseModelConfig,
 	EntityRelationshipModelParserConfig,
-	JavaClassModelToCodeConverterConfig,
+	JavaClassModelConfig, JpaConfig,
 	MysqlDialectConfig,
-	NomnomlEntityRelationshipModelToDiagramCodeConverterConfig,
+	NomnomlConfig,
 	OracleDialectConfig,
+	PlantUmlConfig,
 	PostgresqlDialectConfig,
 	SqliteDialectConfig,
 	SqlServerDialectConfig,
-	TypeScriptClassModelToCodeConverterConfig
+	TypeScriptConfig
 } from '@nestorrente/erdiagram';
 
 export default interface ERDiagramCliConfig {
 	parser: EntityRelationshipModelParserConfig;
-	classModel: ClassModelGeneratorConfig;
-	databaseModel: DatabaseModelGeneratorConfig;
+	classModel: ClassModelConfig;
+	databaseModel: DatabaseModelConfig;
 	output: {
 		mysql: MysqlDialectConfig;
 		oracle: OracleDialectConfig;
 		postgresql: PostgresqlDialectConfig;
 		sqlite: SqliteDialectConfig;
 		sqlserver: SqlServerDialectConfig;
-		java: JavaClassModelToCodeConverterConfig;
-		typescript: TypeScriptClassModelToCodeConverterConfig;
-		nomnoml: NomnomlEntityRelationshipModelToDiagramCodeConverterConfig;
+		java: {
+			classModel: JavaClassModelConfig,
+			transformers: {
+				validation: {
+					enabled: boolean;
+					config: BeanValidationConfig;
+				};
+				jpa: {
+					enabled: boolean;
+					config: JpaConfig;
+				};
+			};
+		};
+		typescript: TypeScriptConfig;
+		nomnoml: NomnomlConfig;
+		plantuml: PlantUmlConfig;
 	}
 }
